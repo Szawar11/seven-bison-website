@@ -398,28 +398,30 @@
   }
 
   /*
-   * Custom cursor — small pink dot with delayed follow.
+   * Custom cursor — solid brand-pink dot with delayed follow.
+   * Pure pink #E80787 (brand logo color). No blend modes — consistent look
+   * across light cream backgrounds and dark cinematic sections.
    * Position/scale driven by JS (CustomCursor.tsx). Hidden on touch devices.
    */
   .custom-cursor {
     position: fixed;
     top: 0; left: 0;
-    width: 10px;
-    height: 10px;
+    width: 12px;
+    height: 12px;
     border-radius: 50%;
     background: #E80787;
+    box-shadow: 0 0 0 2px rgba(232, 7, 135, 0.18), 0 0 18px rgba(232, 7, 135, 0.3);
     pointer-events: none;
     z-index: 100;
     transform: translate3d(-50%, -50%, 0);
-    mix-blend-mode: difference;
     transition: width 250ms var(--ease-brand),
                 height 250ms var(--ease-brand),
                 background 250ms var(--ease-brand),
                 opacity 200ms ease;
     will-change: transform;
   }
-  .custom-cursor[data-variant="link"]    { width: 32px; height: 32px; background: rgba(232, 7, 135, 0.7); }
-  .custom-cursor[data-variant="play"]    { width: 64px; height: 64px; background: #E80787; mix-blend-mode: normal; }
+  .custom-cursor[data-variant="link"]    { width: 36px; height: 36px; background: rgba(232, 7, 135, 0.85); box-shadow: 0 0 0 2px rgba(232, 7, 135, 0.25), 0 0 28px rgba(232, 7, 135, 0.4); }
+  .custom-cursor[data-variant="play"]    { width: 68px; height: 68px; background: #E80787; box-shadow: 0 0 0 3px rgba(232, 7, 135, 0.25), 0 0 38px rgba(232, 7, 135, 0.5); }
   .custom-cursor[data-variant="hidden"]  { opacity: 0; }
   .custom-cursor-label {
     position: absolute;

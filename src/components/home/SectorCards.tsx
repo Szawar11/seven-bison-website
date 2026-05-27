@@ -119,12 +119,18 @@ export function SectorCards() {
                     'overflow-hidden',
                   ].join(' ')}
                 >
-                  {/* Thumbnail — receives 2.5D tilt via JS */}
-                  <div className="card-thumb relative aspect-card w-full overflow-hidden bg-canvas-muted">
+                  {/* Thumbnail — dark cinematic context for pink elements to pop */}
+                  <div className="card-thumb dark-zone relative aspect-card w-full overflow-hidden bg-black" data-cursor="play">
                     {/* Thematic animation — visible until real poster asset exists */}
                     <AnimatedPlaceholder
                       variant={variantMap[sector.slug] ?? 'reel'}
-                      dark={false}
+                      dark
+                    />
+                    {/* Subtle inner vignette for cinematic feel */}
+                    <div
+                      aria-hidden="true"
+                      className="pointer-events-none absolute inset-0"
+                      style={{ background: 'radial-gradient(ellipse at center, transparent 50%, rgba(0,0,0,0.45) 100%)' }}
                     />
                     {/* Poster layers on top once the file is present */}
                     {media.poster && (
