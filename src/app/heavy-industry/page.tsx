@@ -35,7 +35,7 @@ const cases = [
     title: 'Energy infrastructure overview',
     summary: 'Large-scale operation explainer for global stakeholder communications.',
     poster: '/videos/case-aramco-poster.jpg',
-    href: '/portfolio/aramco',
+    href: '/portfolio',
     subsector: 'Energy',
   },
   {
@@ -43,7 +43,7 @@ const cases = [
     title: 'Product launch series',
     summary: 'Multi-asset launch campaign for the construction tools market.',
     poster: '/videos/case-hilti-poster.jpg',
-    href: '/portfolio/hilti',
+    href: '/portfolio',
     subsector: 'Manufacturing',
   },
   {
@@ -51,7 +51,7 @@ const cases = [
     title: 'Subsea cable installation film',
     summary: 'Documenting a complex offshore infrastructure project.',
     poster: '/videos/case-tfkable-poster.jpg',
-    href: '/portfolio/tf-kable',
+    href: '/portfolio',
     subsector: 'Infrastructure',
   },
 ]

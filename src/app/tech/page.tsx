@@ -44,7 +44,7 @@ const cases = [
     title: 'Attack surface management explainer',
     summary: 'Cybersecurity platform launch film for a global audience.',
     poster: '/videos/case-outpost24-poster.jpg',
-    href: '/portfolio/outpost24',
+    href: '/portfolio',
     subsector: 'Cybersecurity',
   },
   {
@@ -52,7 +52,7 @@ const cases = [
     title: 'Real-time payments overview',
     summary: 'Fintech infrastructure explainer for enterprise banks.',
     poster: '/videos/case-alacriti-poster.jpg',
-    href: '/portfolio/alacriti',
+    href: '/portfolio',
     subsector: 'Fintech',
   },
   {
@@ -60,7 +60,7 @@ const cases = [
     title: 'Cloud migration case film',
     summary: 'Enterprise migration story produced under brand guidelines.',
     poster: '/videos/case-aws-poster.jpg',
-    href: '/portfolio/aws',
+    href: '/portfolio',
     subsector: 'Software & SaaS',
   },
 ]

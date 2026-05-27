@@ -35,7 +35,7 @@ const cases = [
     title: 'Mechanism of action animation',
     summary: 'Scientific explainer for HCP education across global markets.',
     poster: '/videos/case-roche-poster.jpg',
-    href: '/portfolio/roche',
+    href: '/portfolio',
     subsector: 'Pharma',
   },
   {
@@ -43,7 +43,7 @@ const cases = [
     title: 'Patient education series',
     summary: 'Multi-asset patient education campaign across therapeutic areas.',
     poster: '/videos/case-bayer-poster.jpg',
-    href: '/portfolio/bayer',
+    href: '/portfolio',
     subsector: 'Pharma',
   },
   {
@@ -51,7 +51,7 @@ const cases = [
     title: 'Ophthalmic product launch',
     summary: 'Product launch film for specialty ophthalmology market.',
     poster: '/videos/case-santen-poster.jpg',
-    href: '/portfolio/santen',
+    href: '/portfolio',
     subsector: 'Medtech',
   },
 ]
