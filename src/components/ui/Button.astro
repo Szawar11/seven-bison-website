@@ -1,0 +1,55 @@
+---
+/**
+ * Button — Seven Bison primary UI component.
+ *
+ * Variants follow BRAND.md section 10:
+ * - primary:   filled pink, black text
+ * - secondary: 1px pink border, pink text
+ * - text:      pink text with arrow
+ *
+ * No glow. No drop shadow. No gradient. Sharp corners.
+ */
+
+export interface Props {
+  variant?: 'primary' | 'secondary' | 'text';
+  href?: string;
+  type?: 'button' | 'submit' | 'reset';
+  class?: string;
+  external?: boolean;
+}
+
+const {
+  variant = 'primary',
+  href,
+  type = 'button',
+  class: className = '',
+  external = false,
+} = Astro.props;
+
+const base =
+  'inline-flex items-center gap-2 font-body text-cta uppercase tracking-wide-label transition-all duration-micro ease-brand focus-visible:outline-pink';
+
+const variants = {
+  primary:
+    'bg-pink text-black px-3 py-2 hover:bg-offwhite active:translate-y-px',
+  secondary:
+    'border border-pink text-pink px-3 py-2 hover:bg-pink-10 active:translate-y-px',
+  text:
+    'text-pink hover:gap-3',
+} as const;
+
+const Tag = href ? 'a' : 'button';
+const rel = external ? 'noopener noreferrer' : undefined;
+const target = external ? '_blank' : undefined;
+---
+
+<Tag
+  href={href}
+  type={!href ? type : undefined}
+  rel={rel}
+  target={target}
+  class:list={[base, variants[variant], className]}
+>
+  <slot />
+  {variant === 'text' && <span aria-hidden="true">→</span>}
+</Tag>

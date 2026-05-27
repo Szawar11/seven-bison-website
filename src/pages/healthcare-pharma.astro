@@ -1,0 +1,96 @@
+---
+/**
+ * /healthcare-pharma — Sector subpage placeholder.
+ * TODO: replace placeholder content with sector-specific research from Szymon.
+ * Vocabulary buckets to address: HCP education, MOA animations, congress
+ * content, omnichannel HCP campaigns, patient education.
+ */
+import BaseLayout from '@layouts/BaseLayout.astro';
+import SectorHero from '@components/sector/SectorHero.astro';
+import PainPoints from '@components/sector/PainPoints.astro';
+import SectorCaseGrid from '@components/sector/SectorCaseGrid.astro';
+import Section from '@components/ui/Section.astro';
+import Eyebrow from '@components/ui/Eyebrow.astro';
+import Button from '@components/ui/Button.astro';
+import { contact } from '@lib/config';
+
+const painPoints = [
+  {
+    title: 'Regulated from the first frame.',
+    body:
+      'Medical legal review (MLR), promotional code compliance, region-specific approvals. The work has to be built to pass review, not retrofitted.',
+  },
+  {
+    title: 'Visualising biology.',
+    body:
+      'MOA animations, biotech mechanisms, clinical pathway content — abstract science made legible to HCPs without losing scientific accuracy.',
+  },
+  {
+    title: 'HCP and patient audiences, in parallel.',
+    body:
+      'Same brand, different vocabularies, different evidence requirements. The asset library has to serve both without diluting either.',
+  },
+];
+
+const cases = [
+  {
+    brand: 'Roche',
+    title: 'HCP education series',
+    poster: '/videos/case-roche-poster.jpg',
+    href: '/portfolio/roche',
+  },
+  {
+    brand: 'Bayer',
+    title: 'MOA animation',
+    poster: '/videos/case-bayer-poster.jpg',
+    href: '/portfolio/bayer',
+  },
+  {
+    brand: 'Santen',
+    title: 'Therapeutic launch film',
+    poster: '/videos/case-santen-poster.jpg',
+    href: '/portfolio/santen',
+  },
+];
+---
+
+<BaseLayout
+  title="Video for Healthcare & Pharma — Medtech, Biotech, Pharma, Health Systems"
+  description="Premium video for healthcare and pharma. MLR-aware production. MOA animations, HCP education, congress content, patient education."
+>
+  <SectorHero
+    sector="Healthcare & Pharma"
+    headline="Premium video, built to pass MLR."
+    intro="Medtech. Biotech. Pharma. Health systems. We produce MOA animations, HCP education, congress content, and patient education that lands with HCPs and clears review."
+    posterUrl="/videos/sector-healthcare-poster.jpg"
+  />
+
+  <PainPoints
+    eyebrow="Why this is hard"
+    heading="What pharma marketing teams actually need."
+    points={painPoints}
+  />
+
+  <SectorCaseGrid
+    eyebrow="Selected healthcare work"
+    heading="Work that clears review and lands with HCPs."
+    cases={cases}
+  />
+
+  <Section spacing="loose" surface="graphite">
+    <div class="grid grid-cols-1 gap-8 md:grid-cols-12">
+      <div class="md:col-span-3">
+        <Eyebrow>Next step</Eyebrow>
+      </div>
+      <div class="md:col-span-9">
+        <h2 class="max-w-readable">
+          Talk to Szymon about a healthcare project.
+        </h2>
+        <div class="mt-6 flex flex-wrap items-center gap-4">
+          <Button variant="primary" href={contact.calendly}>Book a call →</Button>
+          <Button variant="secondary" href={`mailto:${contact.email}`}>Email us</Button>
+        </div>
+      </div>
+    </div>
+  </Section>
+</BaseLayout>

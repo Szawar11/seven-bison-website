@@ -1,0 +1,109 @@
+---
+import Container from './Container.astro';
+import { social, contact, sectors } from '@lib/config';
+
+const year = new Date().getFullYear();
+---
+
+<footer class="mt-16 border-t border-gray-15 bg-black py-12">
+  <Container>
+    <div class="grid grid-cols-1 gap-8 md:grid-cols-12">
+      <!-- Brand column -->
+      <div class="md:col-span-5">
+        <a href="/" class="flex items-center gap-2" aria-label="Seven Bison — home">
+          <svg
+            width="32"
+            height="32"
+            viewBox="0 0 32 32"
+            fill="none"
+            xmlns="http://www.w3.org/2000/svg"
+            aria-hidden="true"
+          >
+            <path
+              d="M4 20 L8 12 L14 14 L18 8 L24 12 L28 10 L26 18 L22 22 L10 22 Z"
+              stroke="#E01677"
+              stroke-width="1.5"
+              fill="none"
+              stroke-linejoin="round"
+            />
+          </svg>
+          <span class="font-display text-[18px] font-bold uppercase tracking-wide-label text-pink">
+            Seven&nbsp;Bison
+          </span>
+        </a>
+        <p class="mt-3 max-w-readable text-body text-gray">
+          Premium video, motion design and animation for B2B brands with complex,
+          regulated, or hard-to-photograph subject matter.
+        </p>
+      </div>
+
+      <!-- Sectors -->
+      <div class="md:col-span-3">
+        <p class="eyebrow">Sectors</p>
+        <ul class="mt-3 space-y-2">
+          {
+            sectors.map((s) => (
+              <li>
+                <a
+                  href={s.href}
+                  class="text-body text-offwhite transition-colors duration-micro ease-brand hover:text-pink"
+                >
+                  {s.title}
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+
+      <!-- Studio -->
+      <div class="md:col-span-2">
+        <p class="eyebrow">Studio</p>
+        <ul class="mt-3 space-y-2">
+          <li><a href="/studio-access" class="text-body hover:text-pink">Studio Access</a></li>
+          <li><a href="/portfolio" class="text-body hover:text-pink">Portfolio</a></li>
+          <li><a href="/about" class="text-body hover:text-pink">About</a></li>
+          <li><a href="/contact" class="text-body hover:text-pink">Contact</a></li>
+        </ul>
+      </div>
+
+      <!-- Contact -->
+      <div class="md:col-span-2">
+        <p class="eyebrow">Talk to us</p>
+        <ul class="mt-3 space-y-2">
+          <li>
+            <a
+              href={contact.calendly}
+              class="text-body text-offwhite transition-colors duration-micro hover:text-pink"
+            >
+              Book a call →
+            </a>
+          </li>
+          <li>
+            <a
+              href={`mailto:${contact.email}`}
+              class="text-body text-offwhite transition-colors duration-micro hover:text-pink"
+            >
+              {contact.email}
+            </a>
+          </li>
+          <li>
+            <a
+              href={social.linkedin}
+              class="text-body text-offwhite transition-colors duration-micro hover:text-pink"
+              rel="noopener noreferrer"
+              target="_blank"
+            >
+              LinkedIn
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="mt-12 flex flex-col items-start justify-between gap-3 border-t border-gray-15 pt-6 text-caption text-gray md:flex-row md:items-center">
+      <p>© {year} Seven Bison. All rights reserved.</p>
+      <p>Gdańsk, Poland — working globally.</p>
+    </div>
+  </Container>
+</footer>

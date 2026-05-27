@@ -1,0 +1,39 @@
+---
+/**
+ * ServicesStrip — Outline §4.4
+ * 8 tiles in priority order. Top row gives equal billing to
+ * 2D/3D motion design and cinematic AI generation, under creative storytelling umbrella.
+ */
+import Section from '../ui/Section.astro';
+import Eyebrow from '../ui/Eyebrow.astro';
+import { services } from '@lib/config';
+---
+
+<Section spacing="loose">
+  <div class="mb-8 grid grid-cols-1 gap-8 md:grid-cols-12">
+    <div class="md:col-span-3">
+      <Eyebrow>03 · What we do</Eyebrow>
+    </div>
+    <div class="md:col-span-9">
+      <h2 class="max-w-readable">Built for bold moves.</h2>
+    </div>
+  </div>
+
+  <ul class="grid grid-cols-1 gap-px overflow-hidden border border-gray-15 bg-gray-15 sm:grid-cols-2 lg:grid-cols-4">
+    {
+      services.map((service, i) => (
+        <li class="group flex h-full flex-col justify-between gap-6 bg-black p-4 transition-colors duration-micro ease-brand hover:bg-graphite">
+          <span class="eyebrow">{String(i + 1).padStart(2, '0')}</span>
+          <div>
+            <p class="font-display text-h3 uppercase leading-tight text-offwhite transition-colors duration-micro group-hover:text-pink">
+              {service.title}
+            </p>
+            {('description' in service) && service.description && (
+              <p class="mt-2 text-caption text-gray">{service.description}</p>
+            )}
+          </div>
+        </li>
+      ))
+    }
+  </ul>
+</Section>

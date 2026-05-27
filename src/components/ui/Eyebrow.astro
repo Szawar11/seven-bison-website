@@ -1,0 +1,13 @@
+---
+export interface Props {
+  as?: 'p' | 'span' | 'div';
+  class?: string;
+}
+
+const { as = 'p', class: className = '' } = Astro.props;
+const Tag = as;
+---
+
+<Tag class:list={['eyebrow', className]}>
+  <slot />
+</Tag>

@@ -1,0 +1,57 @@
+---
+/**
+ * SectorHero — Per outline §5 shared template, item 1.
+ * Sector-specific headline that names the buyer's recurring content categories.
+ */
+import Container from '../layout/Container.astro';
+
+export interface Props {
+  sector: string;
+  headline: string;
+  intro: string;
+  posterUrl?: string;
+  vimeoUrl?: string;
+}
+
+const { sector, headline, intro, posterUrl = '', vimeoUrl = '' } = Astro.props;
+---
+
+<section class="relative isolate min-h-[72vh] overflow-hidden bg-black">
+  <div class="absolute inset-0 -z-10">
+    {
+      vimeoUrl ? (
+        <iframe
+          src={`${vimeoUrl}?autoplay=1&loop=1&muted=1&background=1&controls=0`}
+          allow="autoplay; fullscreen"
+          allowfullscreen
+          class="h-full w-full object-cover"
+          style="pointer-events: none;"
+          title={`${sector} reel`}
+        />
+      ) : (
+        <div
+          class="h-full w-full bg-graphite"
+          style={posterUrl ? `background-image: url(${posterUrl}); background-size: cover; background-position: center;` : ''}
+          role="img"
+          aria-label={`${sector} reel placeholder`}
+        />
+      )
+    }
+  </div>
+  <div class="absolute inset-0 -z-10 bg-black/55" aria-hidden="true"></div>
+
+  <Container as="div">
+    <div class="flex min-h-[72vh] flex-col justify-end pb-12 pt-16">
+      <p class="eyebrow reveal-up">{sector}</p>
+      <h1 class="reveal-up mt-3 max-w-[18ch] text-offwhite" style="--i: 1">
+        {headline}
+      </h1>
+      <p
+        class="reveal-up mt-4 max-w-readable text-lead text-offwhite/85"
+        style="--i: 2"
+      >
+        {intro}
+      </p>
+    </div>
+  </Container>
+</section>

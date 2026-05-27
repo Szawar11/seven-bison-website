@@ -1,0 +1,67 @@
+---
+/**
+ * SectorCaseGrid — Per outline §5 shared template, item 4.
+ * 3–6 featured pieces specific to the sector.
+ *
+ * Each card: video poster, brand, project title, short summary.
+ * Clicking opens case study page or Vimeo modal.
+ */
+import Section from '../ui/Section.astro';
+import Eyebrow from '../ui/Eyebrow.astro';
+
+export interface CaseStudyCard {
+  brand: string;
+  title: string;
+  summary?: string;
+  poster: string;
+  href: string;
+  /** optional sub-sector tag for grouping (only used on /tech) */
+  subsector?: string;
+}
+
+export interface Props {
+  eyebrow?: string;
+  heading: string;
+  cases: CaseStudyCard[];
+}
+
+const { eyebrow = 'Selected sector work', heading, cases } = Astro.props;
+---
+
+<Section spacing="loose">
+  <div class="mb-8 grid grid-cols-1 gap-8 md:grid-cols-12">
+    <div class="md:col-span-3">
+      <Eyebrow>{eyebrow}</Eyebrow>
+    </div>
+    <div class="md:col-span-9">
+      <h2 class="max-w-readable">{heading}</h2>
+    </div>
+  </div>
+
+  <ul class="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+    {
+      cases.map((c) => (
+        <li class="group">
+          <a
+            href={c.href}
+            class="flex h-full flex-col gap-3 border border-gray-15 bg-graphite transition-colors duration-micro ease-brand hover:border-pink"
+          >
+            <div
+              class="aspect-video w-full overflow-hidden bg-charcoal"
+              style={c.poster ? `background-image: url(${c.poster}); background-size: cover; background-position: center;` : ''}
+              role="img"
+              aria-label={`${c.brand} ${c.title}`}
+            />
+            <div class="flex flex-1 flex-col gap-2 p-4">
+              <span class="eyebrow">{c.brand}</span>
+              <p class="font-display text-h3 uppercase leading-tight text-offwhite transition-colors duration-micro group-hover:text-pink">
+                {c.title}
+              </p>
+              {c.summary && <p class="text-caption text-gray">{c.summary}</p>}
+            </div>
+          </a>
+        </li>
+      ))
+    }
+  </ul>
+</Section>

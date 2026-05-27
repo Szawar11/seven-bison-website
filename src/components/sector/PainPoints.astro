@@ -1,0 +1,49 @@
+---
+/**
+ * PainPoints — Per outline §5 shared template, item 2.
+ * 2–3 specific problems the sector faces producing this content.
+ *
+ * COPY-CRITICAL: This is where sector vocabulary lands. Replace placeholders
+ * with sector-specific pain points written in the buyer's language.
+ */
+import Section from '../ui/Section.astro';
+import Eyebrow from '../ui/Eyebrow.astro';
+
+export interface PainPoint {
+  title: string;
+  body: string;
+}
+
+export interface Props {
+  eyebrow?: string;
+  heading: string;
+  points: PainPoint[];
+}
+
+const { eyebrow = 'Why this is hard', heading, points } = Astro.props;
+---
+
+<Section spacing="loose">
+  <div class="mb-8 grid grid-cols-1 gap-8 md:grid-cols-12">
+    <div class="md:col-span-3">
+      <Eyebrow>{eyebrow}</Eyebrow>
+    </div>
+    <div class="md:col-span-9">
+      <h2 class="max-w-readable">{heading}</h2>
+    </div>
+  </div>
+
+  <ul class="grid grid-cols-1 gap-6 md:grid-cols-3">
+    {
+      points.map((p, i) => (
+        <li class="border-t border-gray-15 pt-6">
+          <span class="eyebrow">{String(i + 1).padStart(2, '0')}</span>
+          <p class="mt-3 font-display text-h3 uppercase text-offwhite">
+            {p.title}
+          </p>
+          <p class="mt-3 text-body text-gray">{p.body}</p>
+        </li>
+      ))
+    }
+  </ul>
+</Section>

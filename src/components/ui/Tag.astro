@@ -1,0 +1,23 @@
+---
+export interface Props {
+  variant?: 'filled' | 'outlined';
+  class?: string;
+}
+
+const { variant = 'outlined', class: className = '' } = Astro.props;
+
+const styles = {
+  filled: 'bg-pink text-black',
+  outlined: 'border border-gray-30 text-offwhite',
+} as const;
+---
+
+<span
+  class:list={[
+    'inline-flex items-center px-2 py-1 font-body text-label uppercase tracking-wide-label',
+    styles[variant],
+    className,
+  ]}
+>
+  <slot />
+</span>

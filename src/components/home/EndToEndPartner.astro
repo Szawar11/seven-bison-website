@@ -1,0 +1,29 @@
+---
+/**
+ * EndToEndPartner — Outline §4.2
+ * Single tight block: position as full creative partner + name Studio Access.
+ * No CTA. Positioning only.
+ */
+import Section from '../ui/Section.astro';
+import Eyebrow from '../ui/Eyebrow.astro';
+---
+
+<Section spacing="default">
+  <div class="grid grid-cols-1 gap-8 md:grid-cols-12">
+    <div class="md:col-span-3">
+      <Eyebrow>02 · End-to-end partner</Eyebrow>
+    </div>
+    <div class="md:col-span-9">
+      <p class="max-w-readable font-display text-h3 uppercase text-offwhite">
+        Your end-to-end creative partner — from research and strategy,
+        through concept and production, to final delivery.
+      </p>
+      <p class="mt-4 max-w-readable text-body text-gray">
+        Available project-by-project, or on an ongoing basis through
+        <a href="/studio-access" class="text-pink hover:underline">
+          Studio Access
+        </a>.
+      </p>
+    </div>
+  </div>
+</Section>

@@ -1,0 +1,14 @@
+---
+export interface Props {
+  /** Add bottom padding for sections */
+  as?: 'section' | 'div' | 'header' | 'footer' | 'article';
+  class?: string;
+}
+
+const { as = 'div', class: className = '' } = Astro.props;
+const Tag = as;
+---
+
+<Tag class:list={['container-site', className]}>
+  <slot />
+</Tag>

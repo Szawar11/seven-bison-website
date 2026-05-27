@@ -1,0 +1,41 @@
+---
+/**
+ * SubsectorNav — Per outline §5 shared template, item 3.
+ * For /tech only: deep-linkable anchors for #cybersecurity, #fintech, #software-saas.
+ * Sales outreach can deep-link a fintech prospect directly to /tech#fintech.
+ */
+import Container from '../layout/Container.astro';
+
+export interface SubsectorAnchor {
+  label: string;
+  href: string; // '#cybersecurity' etc.
+}
+
+export interface Props {
+  anchors: SubsectorAnchor[];
+}
+
+const { anchors } = Astro.props;
+---
+
+<nav
+  aria-label="Sub-sectors"
+  class="sticky top-[72px] z-40 border-y border-gray-15 bg-black/90 backdrop-blur-[2px]"
+>
+  <Container>
+    <ul class="flex items-center gap-6 overflow-x-auto py-3">
+      {
+        anchors.map((a) => (
+          <li>
+            <a
+              href={a.href}
+              class="font-body text-cta uppercase tracking-wide-label text-offwhite transition-colors duration-micro hover:text-pink"
+            >
+              {a.label}
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+  </Container>
+</nav>

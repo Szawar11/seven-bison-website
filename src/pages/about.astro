@@ -1,0 +1,95 @@
+---
+/**
+ * /about — Studio, founder, team.
+ * Per outline §8.
+ * Founder credibility (Bloomberg + Getty Images editorial) is the heavy artillery.
+ * Don't bury it.
+ */
+import BaseLayout from '@layouts/BaseLayout.astro';
+import Section from '@components/ui/Section.astro';
+import Eyebrow from '@components/ui/Eyebrow.astro';
+import Button from '@components/ui/Button.astro';
+import Container from '@components/layout/Container.astro';
+import { contact } from '@lib/config';
+---
+
+<BaseLayout
+  title="About"
+  description="Seven Bison is a premium B2B video and motion studio. AI-native production, human craft. Founder-led."
+>
+  <!-- Hero -->
+  <section class="relative isolate min-h-[50vh] overflow-hidden bg-black">
+    <Container as="div">
+      <div class="flex min-h-[50vh] flex-col justify-end pb-12 pt-16">
+        <p class="eyebrow">About</p>
+        <h1 class="mt-3 max-w-[18ch] text-offwhite">
+          Editorial discipline. AI-native production.
+        </h1>
+      </div>
+    </Container>
+  </section>
+
+  <!-- Studio -->
+  <Section spacing="loose">
+    <div class="grid grid-cols-1 gap-8 md:grid-cols-12">
+      <div class="md:col-span-3">
+        <Eyebrow>The studio</Eyebrow>
+      </div>
+      <div class="md:col-span-9">
+        <h2 class="max-w-readable">A studio built for serious B2B.</h2>
+        <p class="mt-4 max-w-readable text-body text-gray">
+          Seven Bison is a premium B2B video, motion design and animation studio
+          based in Gdańsk, working globally. We partner with brands in complex,
+          regulated, and visually-challenged industries — explaining, persuading,
+          and inspiring with confidence.
+        </p>
+        <p class="mt-4 max-w-readable text-body text-gray">
+          AI-native production. Human craft. Launch-ready in 48 hours when the
+          brief demands it.
+        </p>
+      </div>
+    </div>
+  </Section>
+
+  <!-- Founder -->
+  <Section spacing="loose" surface="graphite">
+    <div class="grid grid-cols-1 gap-8 md:grid-cols-12">
+      <div class="md:col-span-3">
+        <Eyebrow>Founder</Eyebrow>
+      </div>
+      <div class="md:col-span-9">
+        <h2 class="max-w-readable">Szymon Wojewski.</h2>
+        <p class="mt-4 max-w-readable text-body text-gray">
+          Background in news editing at Bloomberg UK and Getty Images before
+          building Seven Bison. That background shapes how the studio works:
+          editorial discipline, deadline reliability, and comfort with complex
+          subject matter.
+        </p>
+        <p class="mt-4 max-w-readable text-body text-gray">
+          Every intro call goes through Szymon directly.
+        </p>
+        <div class="mt-6">
+          <Button variant="text" href={contact.calendly}>
+            Book a call with Szymon
+          </Button>
+        </div>
+      </div>
+    </div>
+  </Section>
+
+  <!-- Team (no headcount claims) -->
+  <Section spacing="loose">
+    <div class="grid grid-cols-1 gap-8 md:grid-cols-12">
+      <div class="md:col-span-3">
+        <Eyebrow>Team</Eyebrow>
+      </div>
+      <div class="md:col-span-9">
+        <h2 class="max-w-readable">A small core. Specialist depth.</h2>
+        <p class="mt-4 max-w-readable text-body text-gray">
+          Core team and specialist collaborators. TODO: add team blocks with
+          photos and brief credentials. Don't advertise headcount as a number.
+        </p>
+      </div>
+    </div>
+  </Section>
+</BaseLayout>

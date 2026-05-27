@@ -1,0 +1,77 @@
+---
+import { nav, contact } from '@lib/config';
+import Container from './Container.astro';
+
+const currentPath = Astro.url.pathname;
+---
+
+<header class="sticky top-0 z-50 border-b border-gray-15 bg-black/80 backdrop-blur-[2px]">
+  <Container>
+    <div class="flex h-[72px] items-center justify-between">
+      <!-- Logo -->
+      <a href="/" class="flex items-center gap-2" aria-label="Seven Bison — home">
+        <!-- Placeholder mark. Replace with /public/images/logo-pink.svg when available -->
+        <svg
+          width="32"
+          height="32"
+          viewBox="0 0 32 32"
+          fill="none"
+          xmlns="http://www.w3.org/2000/svg"
+          aria-hidden="true"
+        >
+          <path
+            d="M4 20 L8 12 L14 14 L18 8 L24 12 L28 10 L26 18 L22 22 L10 22 Z"
+            stroke="#E01677"
+            stroke-width="1.5"
+            fill="none"
+            stroke-linejoin="round"
+          />
+        </svg>
+        <span class="font-display text-[18px] font-bold uppercase tracking-wide-label text-pink">
+          Seven&nbsp;Bison
+        </span>
+      </a>
+
+      <!-- Primary nav -->
+      <nav aria-label="Primary" class="hidden items-center gap-6 md:flex">
+        {
+          nav.map((item) => {
+            const isActive = currentPath === item.href;
+            return (
+              <a
+                href={item.href}
+                class:list={[
+                  'font-body text-[13px] font-medium uppercase tracking-wide-label transition-colors duration-micro ease-brand',
+                  isActive ? 'text-pink' : 'text-offwhite hover:text-pink',
+                ]}
+                aria-current={isActive ? 'page' : undefined}
+              >
+                {item.label}
+              </a>
+            );
+          })
+        }
+      </nav>
+
+      <!-- CTA -->
+      <a
+        href={contact.calendly}
+        class="hidden border border-pink px-3 py-2 font-body text-cta uppercase text-pink transition-colors duration-micro ease-brand hover:bg-pink hover:text-black md:inline-block"
+      >
+        Book a call →
+      </a>
+
+      <!-- Mobile menu trigger — minimal, no decorative icon -->
+      <button
+        type="button"
+        class="md:hidden"
+        aria-label="Open menu"
+        data-mobile-menu-trigger
+      >
+        <span class="block h-px w-6 bg-offwhite"></span>
+        <span class="mt-1.5 block h-px w-6 bg-offwhite"></span>
+        <span class="mt-1.5 block h-px w-6 bg-offwhite"></span>
+      </button>
+    </div>
+  </Container>
+</header>

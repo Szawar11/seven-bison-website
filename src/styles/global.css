@@ -1,0 +1,327 @@
+/*
+ * Seven Bison — Global Styles
+ * Two modes. One system.
+ *
+ * Light Corporate Mode  → default (:root)
+ * Dark Cinematic Mode   → .dark-zone scope
+ *
+ * Components reference semantic CSS vars (--surface-*, --text-*).
+ * Tailwind utilities map to these vars via tailwind.config.mjs.
+ * Never hardcode hex values in components — use the token names.
+ *
+ * Read DESIGN.md before changing anything in this file.
+ */
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ─────────────────────────────────────────────────────────────────────
+ * Semantic token layer
+ * ───────────────────────────────────────────────────────────────────── */
+
+:root {
+  /* Light Corporate Mode — PRIMARY DEFAULT */
+  --surface-canvas:           #F7F5F2;   /* warm off-white, not pure white */
+  --surface-soft:             #F2F0ED;   /* one step warmer — subtle section break */
+  --surface-muted:            #E8E8E8;   /* disabled, subtle dividers */
+  --surface-hairline:         #E8E8E8;   /* 1px card and section borders */
+  --surface-hairline-accent:  #E80787;   /* pink hairline — used sparingly */
+
+  --text-primary:   #111111;             /* default body + display text */
+  --text-secondary: #2A2A2A;             /* supporting body */
+  --text-muted:     #6F6F6F;             /* captions, metadata */
+  --text-disabled:  #8A8A8A;             /* disabled labels */
+  --text-inverse:   #F7F5F2;             /* on filled-pink CTAs */
+  --text-accent:    #E80787;             /* inline links, key highlights */
+
+  /* Layout */
+  --site-margin:    80px;
+  --site-max:       1440px;
+  --readable-max:   720px;
+
+  /* Motion */
+  --ease-brand:     cubic-bezier(0.16, 1, 0.3, 1);
+  --duration-micro: 200ms;
+  --duration-reveal: 600ms;
+}
+
+/* Dark Cinematic Mode — scoped to specific reel/hero containers */
+.dark-zone {
+  --surface-canvas:           #000000;
+  --surface-soft:             #111111;
+  --surface-muted:            #1A1A1A;
+  --surface-hairline:         rgba(255, 255, 255, 0.10);
+  --surface-hairline-accent:  #E80787;
+
+  --text-primary:   #FFFFFF;
+  --text-secondary: rgba(255, 255, 255, 0.85);
+  --text-muted:     #B8B8B8;
+  --text-disabled:  #6F6F6F;
+  --text-inverse:   #111111;
+  --text-accent:    #E80787;
+}
+
+/* ─────────────────────────────────────────────────────────────────────
+ * Base layer
+ * ───────────────────────────────────────────────────────────────────── */
+
+@layer base {
+  *, *::before, *::after {
+    box-sizing: border-box;
+  }
+
+  html {
+    background-color: var(--surface-canvas);
+    color: var(--text-primary);
+    font-family: var(--font-inter), system-ui, sans-serif;
+    font-size: 16px;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+    scroll-behavior: smooth;
+  }
+
+  body {
+    margin: 0;
+    min-height: 100svh;
+    background-color: var(--surface-canvas);
+    color: var(--text-primary);
+    transition: background-color 0ms; /* prevent flash on hydration */
+  }
+
+  /*
+   * Display tier — Raleway, Title Case, NEVER all-caps.
+   * Per DESIGN.master.md §4.5: uppercase only for eyebrow/micro labels.
+   */
+  h1, h2, h3, h4 {
+    font-family: var(--font-raleway), sans-serif;
+    color: var(--text-primary);
+    margin: 0;
+    text-transform: none; /* explicit: no uppercase on headings */
+    text-wrap: balance;   /* even line-break distribution across all headings */
+  }
+
+  h1 {
+    font-size: clamp(52px, 6vw, 76px);
+    line-height: 1.05;
+    letter-spacing: -0.01em;
+    font-weight: 700;
+  }
+
+  h2 {
+    font-size: clamp(30px, 4vw, 42px);
+    line-height: 1.15;
+    letter-spacing: -0.005em;
+    font-weight: 600;
+  }
+
+  h3 {
+    font-size: clamp(22px, 2.5vw, 28px);
+    line-height: 1.25;
+    font-weight: 500;
+  }
+
+  h4 {
+    font-size: 17px;
+    line-height: 1.4;
+    font-weight: 500;
+  }
+
+  p {
+    margin: 0;
+  }
+
+  a {
+    color: inherit;
+    text-decoration: none;
+  }
+
+  img, video, iframe {
+    display: block;
+    max-width: 100%;
+  }
+
+  /* Focus — visible, on-brand */
+  :focus-visible {
+    outline: 2px solid #E80787;
+    outline-offset: 4px;
+  }
+
+  /* Selection */
+  ::selection {
+    background-color: #E80787;
+    color: #111111;
+  }
+
+  /* Reduced motion */
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
+  }
+}
+
+/* ─────────────────────────────────────────────────────────────────────
+ * Component layer
+ * ───────────────────────────────────────────────────────────────────── */
+
+@layer components {
+  /* Site container — 1440 max, 80px desktop margins */
+  .container-site {
+    width: 100%;
+    max-width: var(--site-max);
+    margin-inline: auto;
+    padding-inline: var(--site-margin);
+  }
+
+  @media (max-width: 1024px) {
+    .container-site {
+      padding-inline: 40px;
+    }
+  }
+
+  @media (max-width: 768px) {
+    :root { --site-margin: 24px; }
+    .container-site {
+      padding-inline: 24px;
+    }
+  }
+
+  /*
+   * Eyebrow — always uppercase Inter Medium with open tracking.
+   * Used for section labels, tags, micro-copy, step numbers.
+   * NOT for headings (Title Case only) or body (sentence case only).
+   */
+  .eyebrow {
+    font-family: var(--font-inter), system-ui, sans-serif;
+    font-size: 12px;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: #E80787;
+    line-height: 1.2;
+  }
+
+  /* Hairline dividers */
+  .hairline       { height: 1px; background-color: var(--surface-hairline); }
+  .hairline-pink  { height: 1px; background-color: #E80787; }
+
+  /* Mode boundary — 1px pink hairline at dark/light boundary */
+  .mode-boundary-top    { border-top:    1px solid #E80787; }
+  .mode-boundary-bottom { border-bottom: 1px solid #E80787; }
+
+  /* Invisible GSAP targets — used as reveal anchors */
+  [data-reveal], [data-stagger] {
+    will-change: transform, opacity;
+  }
+}
+
+/* ─────────────────────────────────────────────────────────────────────
+ * Utilities
+ * ───────────────────────────────────────────────────────────────────── */
+
+@layer utilities {
+  /* Fluid text for hero headline when clamp alone isn't enough */
+  .text-fluid-h1 {
+    font-size: clamp(44px, 6vw, 80px);
+  }
+
+  /* Prevent orphans on important headlines */
+  .text-balance {
+    text-wrap: balance;
+  }
+
+  /* Subtle surface transition (for interactive cards) */
+  .surface-interactive {
+    transition:
+      background-color var(--duration-micro) var(--ease-brand),
+      border-color     var(--duration-micro) var(--ease-brand),
+      box-shadow       var(--duration-micro) var(--ease-brand),
+      transform        var(--duration-micro) var(--ease-brand);
+  }
+
+  /*
+   * Card lift — premium B2B hover (Stripe / Linear style).
+   * translateY without transform conflict: apply on inner Link, not GSAP-animated wrapper.
+   * box-shadow gives depth; border becomes pink on hover (handled per-component).
+   */
+  .card-lift {
+    transition:
+      transform   220ms cubic-bezier(0.16, 1, 0.3, 1),
+      box-shadow  220ms cubic-bezier(0.16, 1, 0.3, 1),
+      border-color 200ms cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .card-lift:hover {
+    transform: translateY(-3px);
+    box-shadow:
+      0  2px  8px rgba(17, 17, 17, 0.04),
+      0  8px 24px rgba(17, 17, 17, 0.07);
+  }
+
+  /*
+   * Glass panel — frosted cream for light backgrounds.
+   * Based on Josh W. Comeau technique; matched to #F7F5F2 canvas.
+   * Use sparingly (max 2-3 per viewport). Never animate backdrop-filter.
+   *
+   * Usage: <div class="glass-panel"> on scrolled header, modals, or accent cards.
+   */
+  .glass-panel {
+    background:        rgba(247, 245, 242, 0.80);
+    backdrop-filter:   blur(16px) saturate(1.4);
+    -webkit-backdrop-filter: blur(16px) saturate(1.4);
+    border:            1px solid rgba(255, 255, 255, 0.75);
+  }
+
+  /* Stronger glass — for header bar on scroll */
+  .glass-header {
+    background:        rgba(247, 245, 242, 0.85);
+    backdrop-filter:   blur(20px) saturate(1.5);
+    -webkit-backdrop-filter: blur(20px) saturate(1.5);
+    border-bottom:     1px solid rgba(232, 8, 135, 0.12);
+    box-shadow:        0 1px 0 rgba(255,255,255,0.6), 0 4px 24px rgba(17,17,17,0.04);
+  }
+
+  /* Pink button glow — primary CTA */
+  .btn-glow:hover {
+    box-shadow:
+      0 0 0 3px rgba(232, 7, 135, 0.15),
+      0 4px 16px rgba(232, 7, 135, 0.25);
+  }
+
+  /*
+   * 2.5D card thumbnail — receives perspective + rotateX/Y from JS mouse tracking.
+   * Smooth spring-back when mouse leaves (transition set to 600ms by JS on leave).
+   * During tracking transition is set to 0ms for fluid feel.
+   * Parent card must have overflow-hidden to clip tilted edges.
+   */
+  .card-thumb {
+    will-change: transform;
+    transform: perspective(700px) rotateX(0deg) rotateY(0deg) scale(1);
+    transition: transform 600ms cubic-bezier(0.16, 1, 0.3, 1);
+  }
+
+  /*
+   * Scroll reveal base — opacity 0 initial state for GSAP-driven sections.
+   * Scoped with .sr-wrap so we only init opacity on wrapped containers.
+   */
+  .sr-wrap {
+    will-change: transform, opacity;
+  }
+
+  /* Parallax inner — extra bleed top/bottom, moved by GSAP scrub */
+  .parallax-inner {
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: -15%;
+    bottom: -15%;
+  }
+  .btn-glow:active {
+    box-shadow: 0 0 0 2px rgba(232, 7, 135, 0.20);
+  }
+}

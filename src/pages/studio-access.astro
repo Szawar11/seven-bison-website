@@ -1,0 +1,127 @@
+---
+/**
+ * /studio-access — Productised ongoing offer.
+ * Per outline §6: first-class offering with its own page.
+ * Half the "at scale" signal lives here.
+ * NO PRICING on this page.
+ */
+import BaseLayout from '@layouts/BaseLayout.astro';
+import Section from '@components/ui/Section.astro';
+import Eyebrow from '@components/ui/Eyebrow.astro';
+import Button from '@components/ui/Button.astro';
+import Container from '@components/layout/Container.astro';
+import { contact } from '@lib/config';
+
+const included = [
+  'Editing of existing footage (webinars, demos, founder clips, customer interviews)',
+  'Motion design and animation',
+  'Animated explainers',
+  'Product content',
+  'Cinematic AI image and video generation',
+  'Scoped to volume',
+];
+
+const howSteps = [
+  {
+    title: 'Brief',
+    body: 'Monthly brief. Aligned to your content calendar and channel mix.',
+  },
+  {
+    title: 'Produce',
+    body: 'Dedicated team. AI-native pipeline. Human craft on every deliverable.',
+  },
+  {
+    title: 'Deliver',
+    body: 'Predictable output. Asset libraries built for reuse across channels.',
+  },
+];
+---
+
+<BaseLayout
+  title="Studio Access — Ongoing video on a monthly cadence"
+  description="Studio Access — ongoing video, motion design and animation on a monthly cadence. For brands with recurring content needs."
+>
+  <!-- Hero -->
+  <section class="relative isolate min-h-[60vh] overflow-hidden bg-black">
+    <Container as="div">
+      <div class="flex min-h-[60vh] flex-col justify-end pb-12 pt-16">
+        <p class="eyebrow">Studio Access</p>
+        <h1 class="mt-3 max-w-[18ch] text-offwhite">
+          Ongoing video on a monthly cadence.
+        </h1>
+        <p class="mt-4 max-w-readable text-lead text-gray">
+          For brands with recurring content needs. Internal marketing and comms
+          teams running multiple channels who don't want one-off vendor friction.
+        </p>
+      </div>
+    </Container>
+  </section>
+
+  <!-- What's included -->
+  <Section spacing="loose" surface="graphite">
+    <div class="grid grid-cols-1 gap-8 md:grid-cols-12">
+      <div class="md:col-span-3">
+        <Eyebrow>What's included</Eyebrow>
+      </div>
+      <div class="md:col-span-9">
+        <h2 class="max-w-readable">A studio on retainer.</h2>
+        <ul class="mt-6 grid grid-cols-1 gap-3 md:grid-cols-2">
+          {
+            included.map((item) => (
+              <li class="flex items-start gap-3 border-t border-gray-15 pt-3">
+                <span class="mt-1 inline-block h-2 w-2 bg-pink" aria-hidden="true"></span>
+                <span class="text-body text-offwhite">{item}</span>
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+    </div>
+  </Section>
+
+  <!-- How it works -->
+  <Section spacing="loose">
+    <div class="grid grid-cols-1 gap-8 md:grid-cols-12">
+      <div class="md:col-span-3">
+        <Eyebrow>How it works</Eyebrow>
+      </div>
+      <div class="md:col-span-9">
+        <h2 class="max-w-readable">Three steps. Every month.</h2>
+      </div>
+    </div>
+
+    <ol class="mt-8 grid grid-cols-1 gap-6 md:grid-cols-3">
+      {
+        howSteps.map((s, i) => (
+          <li class="border-t border-pink pt-6">
+            <span class="eyebrow">{String(i + 1).padStart(2, '0')}</span>
+            <p class="mt-3 font-display text-h3 uppercase text-offwhite">
+              {s.title}
+            </p>
+            <p class="mt-3 text-body text-gray">{s.body}</p>
+          </li>
+        ))
+      }
+    </ol>
+  </Section>
+
+  <!-- CTA -->
+  <Section spacing="loose" surface="graphite">
+    <div class="grid grid-cols-1 gap-8 md:grid-cols-12">
+      <div class="md:col-span-3">
+        <Eyebrow>Next step</Eyebrow>
+      </div>
+      <div class="md:col-span-9">
+        <h2 class="max-w-readable">Talk to us about Studio Access.</h2>
+        <p class="mt-4 max-w-readable text-body text-gray">
+          Every Studio Access engagement starts with a scoping call with the founder.
+        </p>
+        <div class="mt-6">
+          <Button variant="primary" href={contact.calendly}>
+            Book a call →
+          </Button>
+        </div>
+      </div>
+    </div>
+  </Section>
+</BaseLayout>

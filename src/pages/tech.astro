@@ -1,0 +1,191 @@
+---
+/**
+ * /tech — Sector subpage for Tech (cybersecurity · fintech · software · SaaS)
+ *
+ * NOTE: Copy on this page is PLACEHOLDER. Per outline §5:
+ * "The copy for these pages is not templatable. Each subpage needs a dedicated
+ *  research pass to identify pain points, vocabulary, recurring content formats,
+ *  and regulatory or technical context."
+ *
+ * Treat this file as the structural reference. Replace placeholder copy with
+ * sector-specific research output from Szymon.
+ */
+import BaseLayout from '@layouts/BaseLayout.astro';
+import SectorHero from '@components/sector/SectorHero.astro';
+import SubsectorNav from '@components/sector/SubsectorNav.astro';
+import PainPoints from '@components/sector/PainPoints.astro';
+import SectorCaseGrid from '@components/sector/SectorCaseGrid.astro';
+import Testimonials from '@components/sector/Testimonials.astro';
+import Section from '@components/ui/Section.astro';
+import Eyebrow from '@components/ui/Eyebrow.astro';
+import Button from '@components/ui/Button.astro';
+import { contact } from '@lib/config';
+
+const subsectorAnchors = [
+  { label: 'Cybersecurity', href: '#cybersecurity' },
+  { label: 'Fintech', href: '#fintech' },
+  { label: 'Software & SaaS', href: '#software-saas' },
+];
+
+// PLACEHOLDER — replace with sector-specific pain-point research.
+const painPoints = [
+  {
+    title: 'Hard-to-visualise products.',
+    body:
+      'Cybersecurity, infrastructure, API platforms — buyers can\'t hold the product. Generic stock won\'t cut it. The work has to make abstract systems legible.',
+  },
+  {
+    title: 'Brand and legal review at every stage.',
+    body:
+      'Enterprise tech buyers route every asset through brand guidelines, legal, and compliance. The work has to pass review on the first round.',
+  },
+  {
+    title: 'Recurring content, not single films.',
+    body:
+      'Product launches, feature releases, integration partners, customer stories, event content. The need is constant. Single-vendor friction adds up fast.',
+  },
+];
+
+// PLACEHOLDER — replace with real case study cards.
+const cases = [
+  {
+    brand: 'Outpost24',
+    title: 'Attack surface management explainer',
+    summary: 'Cybersecurity platform launch film for a global launch.',
+    poster: '/videos/case-outpost24-poster.jpg',
+    href: '/portfolio/outpost24',
+    subsector: 'Cybersecurity',
+  },
+  {
+    brand: 'Alacriti',
+    title: 'Real-time payments overview',
+    summary: 'Fintech infrastructure explainer for enterprise banks.',
+    poster: '/videos/case-alacriti-poster.jpg',
+    href: '/portfolio/alacriti',
+    subsector: 'Fintech',
+  },
+  {
+    brand: 'AWS',
+    title: 'Cloud migration case film',
+    summary: 'Enterprise migration story produced under brand guidelines.',
+    poster: '/videos/case-aws-poster.jpg',
+    href: '/portfolio/aws',
+    subsector: 'Software & SaaS',
+  },
+];
+
+// PLACEHOLDER — replace with permitted client quotes.
+const techQuotes = [
+  {
+    text:
+      'They turned a deeply technical platform into a film our sales team could actually use.',
+    name: 'Placeholder Name',
+    title: 'Head of Brand',
+    company: 'Placeholder Company',
+  },
+];
+---
+
+<BaseLayout
+  title="Video for Tech — Cybersecurity, Fintech, Software, SaaS"
+  description="Premium video, motion design and animation for cybersecurity, fintech, software, and SaaS brands. Hard-to-visualise products, made legible."
+>
+  <SectorHero
+    sector="Tech"
+    headline="Premium video for hard-to-visualise tech."
+    intro="Cybersecurity. Fintech. Software. SaaS. We turn abstract systems into films your sales team, board, and analyst community actually use."
+    posterUrl="/videos/sector-tech-poster.jpg"
+  />
+
+  <SubsectorNav anchors={subsectorAnchors} />
+
+  <PainPoints
+    eyebrow="Why this is hard"
+    heading="What enterprise tech buyers actually need."
+    points={painPoints}
+  />
+
+  <!-- Anchored sub-sector content blocks -->
+  <Section id="cybersecurity" spacing="loose">
+    <Eyebrow>Cybersecurity</Eyebrow>
+    <h2 class="mt-3 max-w-readable">Make the invisible legible.</h2>
+    <p class="mt-4 max-w-readable text-body text-gray">
+      Replace this paragraph with cybersecurity-specific copy: vocabulary, recurring
+      content categories (product launches, threat-landscape films, analyst
+      briefings, event content), regulatory framing, and named anchor brands.
+    </p>
+  </Section>
+
+  <Section id="fintech" spacing="loose" surface="graphite">
+    <Eyebrow>Fintech</Eyebrow>
+    <h2 class="mt-3 max-w-readable">Trust earned in every frame.</h2>
+    <p class="mt-4 max-w-readable text-body text-gray">
+      Replace with fintech-specific copy: payments, infrastructure, regulated B2B,
+      and the brand discipline required for buyers from card networks, banks, and
+      processors.
+    </p>
+  </Section>
+
+  <Section id="software-saas" spacing="loose">
+    <Eyebrow>Software & SaaS</Eyebrow>
+    <h2 class="mt-3 max-w-readable">Launch velocity, premium finish.</h2>
+    <p class="mt-4 max-w-readable text-body text-gray">
+      Replace with SaaS copy: product launches, feature explainers, customer
+      stories, integration partners, in-app onboarding films, and event content
+      at the cadence enterprise marketing teams need.
+    </p>
+  </Section>
+
+  <SectorCaseGrid
+    eyebrow="Selected tech work"
+    heading="Films that pass review on the first round."
+    cases={cases}
+  />
+
+  <Testimonials
+    eyebrow="In their words"
+    quotes={techQuotes}
+  />
+
+  <!-- Studio Access teaser -->
+  <Section spacing="loose">
+    <div class="grid grid-cols-1 gap-8 md:grid-cols-12">
+      <div class="md:col-span-3">
+        <Eyebrow>Studio Access</Eyebrow>
+      </div>
+      <div class="md:col-span-9">
+        <h2 class="max-w-readable">Ongoing partnership for tech brands.</h2>
+        <p class="mt-4 max-w-readable text-body text-gray">
+          Monthly cadence. Predictable output. Editing, motion, AI cinematic
+          generation, animated explainers, product content — scoped to volume.
+        </p>
+        <Button variant="text" href="/studio-access" class="mt-6">
+          See how Studio Access works
+        </Button>
+      </div>
+    </div>
+  </Section>
+
+  <!-- Final CTA -->
+  <Section spacing="loose" surface="graphite">
+    <div class="grid grid-cols-1 gap-8 md:grid-cols-12">
+      <div class="md:col-span-3">
+        <Eyebrow>Next step</Eyebrow>
+      </div>
+      <div class="md:col-span-9">
+        <h2 class="max-w-readable">Talk to Szymon about a tech project.</h2>
+        <p class="mt-4 max-w-readable text-body text-gray">
+          Every intro call goes through the founder directly.
+        </p>
+        <div class="mt-6 flex flex-wrap items-center gap-4">
+          <Button variant="primary" href={contact.calendly}>
+            Book a call →
+          </Button>
+          <Button variant="secondary" href={`mailto:${contact.email}`}>
+            Email us
+          </Button>
+        </div>
+      </div>
+    </div>
+  </Section>
+</BaseLayout>

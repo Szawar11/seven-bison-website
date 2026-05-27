@@ -1,0 +1,95 @@
+---
+/**
+ * Hero — Homepage hero with autoplay reel.
+ *
+ * Per outline §4.1: motion-first, work-first. The three industries are the action.
+ * No CTAs in hero. Reel plays full-bleed.
+ *
+ * Video source: use a Vimeo player URL with autoplay, muted, loop, no controls.
+ * For dev, drop a poster image into /public/videos/reel-poster.jpg.
+ *
+ * Strict no-glow / no-overlay-gradient rule: any darkening is a flat rgba black layer
+ * just dense enough to ensure WCAG contrast on the headline.
+ */
+
+import { sectors } from '@lib/config';
+
+export interface Props {
+  /** Vimeo player URL — autoplay, muted, loop, controls=0 */
+  vimeoUrl?: string;
+  /** Static poster image fallback */
+  posterUrl?: string;
+}
+
+const {
+  vimeoUrl = '', // TODO: paste real Vimeo URL when reel cut is ready
+  posterUrl = '/videos/reel-poster.jpg',
+} = Astro.props;
+---
+
+<section class="relative isolate min-h-[88vh] overflow-hidden bg-black">
+  <!-- Reel layer -->
+  <div class="absolute inset-0 -z-10">
+    {
+      vimeoUrl ? (
+        <iframe
+          src={`${vimeoUrl}?autoplay=1&loop=1&muted=1&background=1&controls=0`}
+          allow="autoplay; fullscreen"
+          allowfullscreen
+          class="h-full w-full object-cover"
+          style="pointer-events: none;"
+          title="Seven Bison reel"
+        />
+      ) : (
+        <div
+          class="h-full w-full bg-graphite"
+          style={`background-image: url(${posterUrl}); background-size: cover; background-position: center;`}
+          role="img"
+          aria-label="Seven Bison reel placeholder"
+        />
+      )
+    }
+  </div>
+
+  <!-- Flat darkening layer (no gradient) to guarantee contrast on the headline -->
+  <div class="absolute inset-0 -z-10 bg-black/55" aria-hidden="true"></div>
+
+  <div class="container-site flex min-h-[88vh] flex-col justify-end pb-12 pt-16">
+    <!-- Headline -->
+    <h1 class="reveal-up max-w-[14ch] text-offwhite">
+      Industry-specific
+      <span class="text-pink">video craft</span>
+      and art, delivered at scale.
+    </h1>
+
+    <p
+      class="reveal-up mt-4 max-w-readable text-lead text-offwhite/85"
+      style="--i: 1"
+    >
+      Premium video, motion design and animation for B2B brands with complex,
+      regulated, or hard-to-photograph subject matter.
+    </p>
+
+    <!-- The three industries — the action -->
+    <nav
+      aria-label="Industries"
+      class="reveal-up mt-8 grid grid-cols-1 gap-px overflow-hidden border border-gray-15 bg-gray-15 md:grid-cols-3"
+      style="--i: 2"
+    >
+      {
+        sectors.map((sector, i) => (
+          <a
+            href={sector.href}
+            class="group flex flex-col gap-2 bg-black/80 p-4 transition-colors duration-micro ease-brand hover:bg-graphite"
+          >
+            <span class="eyebrow">{String(i + 1).padStart(2, '0')}</span>
+            <span class="font-display text-h3 uppercase text-offwhite transition-colors duration-micro group-hover:text-pink">
+              {sector.title}
+            </span>
+            <span class="text-caption text-gray">{sector.subtitle}</span>
+          </a>
+        ))
+      }
+    </nav>
+  </div>
+</section>

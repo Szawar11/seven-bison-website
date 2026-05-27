@@ -1,0 +1,93 @@
+---
+/**
+ * /heavy-industry — Sector subpage placeholder.
+ * TODO: replace placeholder content with sector-specific research from Szymon.
+ * Use /tech as the reference implementation.
+ */
+import BaseLayout from '@layouts/BaseLayout.astro';
+import SectorHero from '@components/sector/SectorHero.astro';
+import PainPoints from '@components/sector/PainPoints.astro';
+import SectorCaseGrid from '@components/sector/SectorCaseGrid.astro';
+import Section from '@components/ui/Section.astro';
+import Eyebrow from '@components/ui/Eyebrow.astro';
+import Button from '@components/ui/Button.astro';
+import { contact } from '@lib/config';
+
+const painPoints = [
+  {
+    title: 'Sites you can\'t film.',
+    body:
+      'Refineries, offshore platforms, mines, sub-sea installations. Access is restricted, costly, and slow. The work has to communicate the asset without the shoot.',
+  },
+  {
+    title: 'Audiences in the field.',
+    body:
+      'Operators, engineers, technicians. The film has to be technically credible the first time it plays in a control room or training session.',
+  },
+  {
+    title: 'Brand consistency across regions.',
+    body:
+      'Global brands need the same visual language across markets, languages, and stakeholders. Local production won\'t hold the line.',
+  },
+];
+
+const cases = [
+  {
+    brand: 'Aramco',
+    title: 'Operational overview film',
+    poster: '/videos/case-aramco-poster.jpg',
+    href: '/portfolio/aramco',
+  },
+  {
+    brand: 'Hilti',
+    title: 'Product platform film',
+    poster: '/videos/case-hilti-poster.jpg',
+    href: '/portfolio/hilti',
+  },
+  {
+    brand: 'TF Kable',
+    title: 'Sub-sea cable explainer',
+    poster: '/videos/case-tfkable-poster.jpg',
+    href: '/portfolio/tf-kable',
+  },
+];
+---
+
+<BaseLayout
+  title="Video for Heavy Industry — Manufacturing, Energy, Infrastructure, Logistics"
+  description="Premium video for heavy industry brands. Sites you can\'t film, audiences in the field, global brand consistency."
+>
+  <SectorHero
+    sector="Heavy Industry"
+    headline="Premium video for sites you can't film."
+    intro="Manufacturing. Energy. Infrastructure. Logistics. We produce assets your engineers, operators, and global stakeholders all trust."
+    posterUrl="/videos/sector-heavy-poster.jpg"
+  />
+
+  <PainPoints
+    eyebrow="Why this is hard"
+    heading="What heavy industry buyers actually need."
+    points={painPoints}
+  />
+
+  <SectorCaseGrid
+    eyebrow="Selected heavy industry work"
+    heading="Assets that work in the boardroom and on the rig."
+    cases={cases}
+  />
+
+  <Section spacing="loose" surface="graphite">
+    <div class="grid grid-cols-1 gap-8 md:grid-cols-12">
+      <div class="md:col-span-3">
+        <Eyebrow>Next step</Eyebrow>
+      </div>
+      <div class="md:col-span-9">
+        <h2 class="max-w-readable">Talk to Szymon about an industrial project.</h2>
+        <div class="mt-6 flex flex-wrap items-center gap-4">
+          <Button variant="primary" href={contact.calendly}>Book a call →</Button>
+          <Button variant="secondary" href={`mailto:${contact.email}`}>Email us</Button>
+        </div>
+      </div>
+    </div>
+  </Section>
+</BaseLayout>

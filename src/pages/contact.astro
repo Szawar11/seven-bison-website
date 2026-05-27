@@ -1,0 +1,67 @@
+---
+/**
+ * /contact — Book a call / email.
+ * Calendly is the primary CTA. Email as fallback.
+ */
+import BaseLayout from '@layouts/BaseLayout.astro';
+import Section from '@components/ui/Section.astro';
+import Eyebrow from '@components/ui/Eyebrow.astro';
+import Button from '@components/ui/Button.astro';
+import Container from '@components/layout/Container.astro';
+import { contact } from '@lib/config';
+---
+
+<BaseLayout
+  title="Contact"
+  description="Talk to Seven Bison. Every intro call goes through the founder directly."
+>
+  <section class="relative isolate min-h-[50vh] overflow-hidden bg-black">
+    <Container as="div">
+      <div class="flex min-h-[50vh] flex-col justify-end pb-12 pt-16">
+        <p class="eyebrow">Contact</p>
+        <h1 class="mt-3 max-w-[18ch] text-offwhite">
+          Tell us about your project.
+        </h1>
+        <p class="mt-4 max-w-readable text-lead text-gray">
+          Every intro call goes through Szymon directly. No discovery-call relay,
+          no sales handoff.
+        </p>
+      </div>
+    </Container>
+  </section>
+
+  <Section spacing="loose">
+    <div class="grid grid-cols-1 gap-8 md:grid-cols-12">
+      <div class="md:col-span-3">
+        <Eyebrow>Two ways to talk</Eyebrow>
+      </div>
+      <div class="md:col-span-9">
+        <div class="flex flex-col gap-6">
+          <div class="border-t border-pink pt-6">
+            <p class="font-display text-h3 uppercase text-offwhite">Book a call</p>
+            <p class="mt-2 text-body text-gray">
+              30 minutes with Szymon. Calendly opens in a new tab.
+            </p>
+            <div class="mt-4">
+              <Button variant="primary" href={contact.calendly} external>
+                Open Calendly →
+              </Button>
+            </div>
+          </div>
+
+          <div class="border-t border-gray-15 pt-6">
+            <p class="font-display text-h3 uppercase text-offwhite">Email</p>
+            <p class="mt-2 text-body text-gray">
+              Prefer to write? We reply within one working day.
+            </p>
+            <div class="mt-4">
+              <Button variant="secondary" href={`mailto:${contact.email}`}>
+                {contact.email}
+              </Button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </Section>
+</BaseLayout>

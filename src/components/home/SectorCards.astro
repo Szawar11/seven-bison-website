@@ -1,0 +1,77 @@
+---
+/**
+ * SectorCards — Outline §4.5
+ *
+ * "This is where Liza's LinkedIn prospects orient themselves. Make it work hard."
+ *
+ * Three large cards: Tech · Heavy Industry · Healthcare & Pharma.
+ * Each card carries:
+ * - short autoplay loop from a real project
+ * - named anchor brands
+ * - sector CTA → sector subpage
+ */
+import Section from '../ui/Section.astro';
+import Eyebrow from '../ui/Eyebrow.astro';
+import { sectors } from '@lib/config';
+
+// TODO: per-sector reel posters / Vimeo IDs
+const sectorReels: Record<string, { vimeo?: string; poster: string }> = {
+  tech: { poster: '/videos/sector-tech-poster.jpg' },
+  'heavy-industry': { poster: '/videos/sector-heavy-poster.jpg' },
+  'healthcare-pharma': { poster: '/videos/sector-healthcare-poster.jpg' },
+};
+---
+
+<Section spacing="loose">
+  <div class="mb-8 grid grid-cols-1 gap-8 md:grid-cols-12">
+    <div class="md:col-span-3">
+      <Eyebrow>04 · Three industries</Eyebrow>
+    </div>
+    <div class="md:col-span-9">
+      <h2 class="max-w-readable">Engineered for precision.</h2>
+      <p class="mt-4 max-w-readable text-body text-gray">
+        Deep sector knowledge. The vocabulary of the buyer's world. Work that
+        passes legal, brand, and technical review on the first round.
+      </p>
+    </div>
+  </div>
+
+  <ul class="grid grid-cols-1 gap-6 md:grid-cols-3">
+    {
+      sectors.map((sector) => {
+        const reel = sectorReels[sector.slug];
+        return (
+          <li class="group">
+            <a
+              href={sector.href}
+              class="flex h-full flex-col gap-4 border border-gray-15 bg-graphite transition-colors duration-micro ease-brand hover:border-pink"
+            >
+              <!-- Reel / poster -->
+              <div
+                class="aspect-[4/3] w-full overflow-hidden bg-charcoal"
+                style={`background-image: url(${reel.poster}); background-size: cover; background-position: center;`}
+                role="img"
+                aria-label={`${sector.title} reel`}
+              />
+
+              <!-- Body -->
+              <div class="flex flex-1 flex-col gap-3 p-4">
+                <span class="eyebrow">{sector.subtitle}</span>
+                <p class="font-display text-h2-m uppercase leading-none text-offwhite transition-colors duration-micro group-hover:text-pink md:text-h2">
+                  {sector.title}
+                </p>
+                <p class="text-caption text-gray">
+                  {sector.anchorBrands.join(' · ')}
+                </p>
+                <span class="mt-auto inline-flex items-center gap-2 pt-2 text-cta uppercase text-pink transition-all duration-micro group-hover:gap-3">
+                  See our {sector.title.toLowerCase()} work
+                  <span aria-hidden="true">→</span>
+                </span>
+              </div>
+            </a>
+          </li>
+        );
+      })
+    }
+  </ul>
+</Section>
