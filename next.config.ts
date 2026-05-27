@@ -18,6 +18,9 @@ const nextConfig: NextConfig = {
       { protocol: 'https', hostname: 'vimeo.com' },
       { protocol: 'https', hostname: 'player.vimeo.com' },
     ],
+    // Pozwala na renderowanie SVG przez <Image>. Bezpieczne — używamy własnych logo z /public.
+    dangerouslyAllowSVG: true,
+    contentSecurityPolicy: "default-src 'self'; script-src 'none'; sandbox;",
   },
 }
 

@@ -1,7 +1,8 @@
 'use client'
 
-import { useRef, useState } from 'react'
+import { useRef, useState, useEffect } from 'react'
 import Link from 'next/link'
+import Image from 'next/image'
 import { usePathname } from 'next/navigation'
 import { useGSAP } from '@gsap/react'
 import { gsap, ScrollTrigger } from '@/lib/gsap'
@@ -10,9 +11,62 @@ import { ArrowUpRight } from 'lucide-react'
 
 export function Header() {
   const headerRef = useRef<HTMLElement>(null)
+  const drawerRef = useRef<HTMLDivElement>(null)
+  const triggerRef = useRef<HTMLButtonElement>(null)
   const [mobileOpen, setMobileOpen] = useState(false)
   const [scrolled, setScrolled] = useState(false)
   const pathname = usePathname()
+
+  /* ── Mobile menu a11y: Escape close + body scroll lock + focus trap ── */
+  useEffect(() => {
+    if (!mobileOpen) {
+      document.body.style.overflow = ''
+      return
+    }
+
+    document.body.style.overflow = 'hidden'
+
+    const handleKey = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') {
+        setMobileOpen(false)
+        triggerRef.current?.focus()
+        return
+      }
+      // Focus trap — keep tab cycling inside the drawer
+      if (e.key === 'Tab' && drawerRef.current) {
+        const focusable = drawerRef.current.querySelectorAll<HTMLElement>(
+          'a[href], button:not([disabled]), [tabindex]:not([tabindex="-1"])'
+        )
+        if (focusable.length === 0) return
+        const first = focusable[0]
+        const last = focusable[focusable.length - 1]
+        if (e.shiftKey && document.activeElement === first) {
+          e.preventDefault()
+          last.focus()
+        } else if (!e.shiftKey && document.activeElement === last) {
+          e.preventDefault()
+          first.focus()
+        }
+      }
+    }
+
+    document.addEventListener('keydown', handleKey)
+    // Move focus into drawer when opened
+    requestAnimationFrame(() => {
+      const firstLink = drawerRef.current?.querySelector<HTMLElement>('a[href]')
+      firstLink?.focus()
+    })
+
+    return () => {
+      document.removeEventListener('keydown', handleKey)
+      document.body.style.overflow = ''
+    }
+  }, [mobileOpen])
+
+  /* Close drawer when route changes */
+  useEffect(() => {
+    setMobileOpen(false)
+  }, [pathname])
 
   useGSAP(
     () => {
@@ -52,10 +106,12 @@ export function Header() {
 
           {/* Logo — pełen lockup SVG (mark + wordmark) */}
           <Link href="/" aria-label="Seven Bison — home" className="shrink-0">
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img
+            <Image
               src="/images/logos/seven-bison-logo-pink.svg"
               alt="Seven Bison"
+              width={160}
+              height={48}
+              priority
               style={{ height: '48px', width: 'auto' }}
             />
           </Link>
@@ -112,10 +168,12 @@ export function Header() {
 
           {/* Mobile menu trigger */}
           <button
+            ref={triggerRef}
             type="button"
             className="flex flex-col gap-1.5 p-2 md:hidden"
             aria-label={mobileOpen ? 'Close menu' : 'Open menu'}
             aria-expanded={mobileOpen}
+            aria-controls="mobile-drawer"
             onClick={() => setMobileOpen((o) => !o)}
           >
             <span
@@ -142,6 +200,11 @@ export function Header() {
 
       {/* Mobile drawer */}
       <div
+        ref={drawerRef}
+        id="mobile-drawer"
+        role="dialog"
+        aria-modal="true"
+        aria-label="Mobile navigation"
         aria-hidden={!mobileOpen}
         className={[
           'fixed inset-0 top-[72px] z-40 bg-canvas',

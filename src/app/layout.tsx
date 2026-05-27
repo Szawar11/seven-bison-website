@@ -33,9 +33,14 @@ export const metadata: Metadata = {
     type: 'website',
     siteName: site.name,
     locale: 'en_GB',
+    url: site.url,
+    title: `${site.name} — ${site.tagline}`,
+    description: site.description,
   },
   twitter: {
     card: 'summary_large_image',
+    title: `${site.name} — ${site.tagline}`,
+    description: site.description,
   },
   robots: {
     index: true,
@@ -61,6 +66,32 @@ export default function RootLayout({
       className={`${raleway.variable} ${inter.variable}`}
     >
       <body>
+        {/* JSON-LD Organization schema for search engines */}
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{
+            __html: JSON.stringify({
+              '@context': 'https://schema.org',
+              '@type': 'Organization',
+              name: site.name,
+              url: site.url,
+              logo: `${site.url}/images/logos/seven-bison-logo-pink.svg`,
+              description: site.description,
+              sameAs: [
+                'https://www.linkedin.com/company/seven-bison',
+                'https://vimeo.com/sevenbison',
+              ],
+              contactPoint: {
+                '@type': 'ContactPoint',
+                contactType: 'sales',
+                email: 'hello@sevenbison.com',
+                areaServed: 'Worldwide',
+                availableLanguage: ['English'],
+              },
+            }),
+          }}
+        />
+
         {/* 2026 layer: reading progress, grain texture, magnetic cursor */}
         <div className="scroll-progress" aria-hidden="true" />
         <div className="grain-layer" aria-hidden="true" />

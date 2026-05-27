@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import Image from 'next/image'
 import { ExternalLink, Video, CalendarDays, Mail, ArrowUpRight } from 'lucide-react'
 import { nav, social, contact, sectors } from '@/lib/config'
 
@@ -13,10 +14,11 @@ export function Footer() {
           {/* Brand column */}
           <div className="md:col-span-5">
             <Link href="/" aria-label="Seven Bison — home">
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
+              <Image
                 src="/images/logos/seven-bison-logo-pink.svg"
                 alt="Seven Bison"
+                width={140}
+                height={40}
                 style={{ height: '40px', width: 'auto' }}
               />
             </Link>
