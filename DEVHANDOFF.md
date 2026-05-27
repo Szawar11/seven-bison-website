@@ -1,316 +1,286 @@
 # Seven Bison — Dev Handoff
 
-**Data:** 2026-05-27  
-**Projekt:** sevenbison.com  
-**Stack:** Next.js 15 · React 19 · TypeScript · Tailwind CSS 3 · GSAP 3  
+**Data:** 2026-05-27
+**Wersja paczki:** v2.0 (final code-ready)
+**Domain:** sevenbison.com
+**Stack:** Next.js 15.5 · React 19 · TypeScript · Tailwind CSS 3 · GSAP 3.13
+**Repo:** https://github.com/Szawar11/seven-bison-website
 
 ---
 
-## Status projektu
+## ✅ Stan projektu — krótko
 
-Strona zbudowana, kompiluje się czysto, wszystkie strony działają.
-Poniżej lista tego co jest **gotowe**, co **czeka na content** od Szymona,
-oraz co wymaga **pracy deweloperskiej**.
+Strona jest **production-ready od strony kodu**. Wszystkie strony, komponenty, animacje, SEO i a11y są skończone. Brakuje **tylko realnych materiałów** (Vimeo, zdjęcia, logo klientów, prawdziwe testimonials, Calendly URL). Wszystkie placeholdery wymieniane 1:1 — nie wymagają zmian kodowych.
 
----
-
-## ✅ Co jest gotowe (nie ruszać bez potrzeby)
-
-| Element | Plik |
-|---|---|
-| Design system — tokeny CSS (kolory, typografia, spacing) | `src/styles/global.css`, `tailwind.config.mjs` |
-| Tryb jasny (Light Corporate) + ciemny (Dark Cinematic `.dark-zone`) | `src/styles/global.css` |
-| Czcionki: Raleway (display) + Inter (body) via Google Fonts | `src/app/layout.tsx` |
-| Header — sticky, GSAP entrance, scroll-aware background | `src/components/layout/Header.tsx` |
-| Footer — loga + nawigacja | `src/components/layout/Footer.tsx` |
-| Homepage — wszystkie sekcje (Hero, TrustStrip, EndToEndPartner, ServicesStrip, SectorCards, HowWeWork, CTA) | `src/app/page.tsx` + `src/components/home/` |
-| Hero — split-frame (jasna lewa + ciemna prawa z reel) + GSAP timeline | `src/components/home/Hero.tsx` |
-| Strony sektorowe — Tech, Heavy Industry, Healthcare & Pharma | `src/app/tech/`, `heavy-industry/`, `healthcare-pharma/` |
-| Sekcje sektorowe: SectorHero, PainPoints, SubsectorNav, SectorCaseGrid, Testimonials | `src/components/sector/` |
-| Studio Access page | `src/app/studio-access/page.tsx` |
-| Portfolio page (placeholder) | `src/app/portfolio/page.tsx` |
-| About page | `src/app/about/page.tsx` |
-| Contact page | `src/app/contact/page.tsx` |
-| Wszystkie GSAP animacje (ScrollTrigger reveals, stagger, hero timeline) | W każdym komponencie `'use client'` |
-| Komponenty UI: `Button`, `Section`, `Eyebrow` | `src/components/ui/` |
-| Config — dane kontaktowe, sektory, usługi | `src/lib/config.ts` |
-
----
-
-## 🔴 Do zrobienia — deweloperskie
-
-### 1. Usunąć CTA buttons z hero (niezgodne ze spec)
-**Plik:** `src/components/home/Hero.tsx` linie 91–97  
-Spec mówi: *"No CTAs in the hero. The three industries are the action."*  
-Usuń ten blok:
-```tsx
-<div className="hero-cta mt-8 flex flex-wrap items-center gap-4">
-  <Button variant="primary" href={contact.calendly} external>
-    Book a call →
-  </Button>
-  <Button variant="secondary" href="/portfolio">
-    See our work
-  </Button>
-</div>
-```
-Usuń też animację `.hero-cta` z GSAP timeline (linie 47–51).
-
----
-
-### 2. Dodać sekcję Studio Access na homepage (§4.8 ze spec)
-**Plik:** `src/app/page.tsx`  
-Wstaw **przed** sekcją Testimonials (po `<HowWeWork />`):
-
-```tsx
-{/* §4.8 Studio Access teaser */}
-<Section spacing="loose" surface="soft">
-  <div className="grid grid-cols-1 gap-10 md:grid-cols-12">
-    <div className="md:col-span-3">
-      <Eyebrow>Studio Access</Eyebrow>
-    </div>
-    <div className="md:col-span-9">
-      <h2 className="max-w-readable font-display text-content-primary">
-        Ongoing video on a monthly cadence.
-      </h2>
-      <p className="mt-4 max-w-readable text-lead text-content-secondary">
-        For brands with recurring content needs — internal marketing and comms
-        teams running multiple channels who don't want one-off vendor friction.
-        Available project-by-project, or on an ongoing basis through Studio Access.
-      </p>
-      <Button variant="text" href="/studio-access" className="mt-6">
-        See how Studio Access works →
-      </Button>
-    </div>
-  </div>
-</Section>
+```bash
+npm install
+npm run dev    # http://localhost:3000
+npm run build  # production build
+npm run start  # production server
 ```
 
 ---
 
-### 3. Dodać Founder block na homepage (§4.10 ze spec)
-**Plik:** `src/app/page.tsx`  
-Wstaw **po** Testimonials, **przed** logo wall:
+## 📦 Co jest zrobione (kompletne)
 
-```tsx
-{/* §4.10 Founder block */}
-<Section spacing="loose" surface="soft">
-  <div className="grid grid-cols-1 gap-10 md:grid-cols-12">
-    <div className="md:col-span-3">
-      <Eyebrow>Founder</Eyebrow>
-    </div>
-    <div className="md:col-span-9 flex flex-col gap-6 md:flex-row md:items-start md:gap-12">
-      {/* TODO: replace with <img> when Szymon's photo is delivered */}
-      <div className="h-32 w-32 shrink-0 bg-canvas-soft border border-hairline" aria-hidden="true" />
-      <div>
-        <h2 className="font-display text-content-primary">Szymon Wojewski.</h2>
-        <p className="mt-4 max-w-readable text-lead text-content-secondary">
-          Background in news editing at Bloomberg UK and Getty Images before
-          building Seven Bison. Editorial discipline, deadline reliability,
-          comfort with complex subject matter.
-        </p>
-        <p className="mt-3 text-body text-content-secondary">
-          Every discovery call goes through Szymon directly.
-        </p>
-        <Button variant="primary" href={contact.calendly} external className="mt-6">
-          Book a call with Szymon →
-        </Button>
-      </div>
-    </div>
-  </div>
-</Section>
-```
+### Strony (`src/app/`)
+- `/` — Homepage (Hero, TrustStrip, EndToEndPartner, LogoWall, CapabilitiesMarquee, ServicesStrip, SectorCards, StudioAccessTeaser, HowWeWork, **AIPipelineSequence** (scroll-scrub), SelectedWork dark zone, Testimonials, FounderTeaser, Final CTA)
+- `/tech`, `/heavy-industry`, `/healthcare-pharma` — Sektory (SectorHero + PainPoints + SubsectorNav + SectorCaseGrid + Testimonials + CTA)
+- `/studio-access` — What's included, How it works, Customer story, Testimonials, CTA
+- `/portfolio` — Filterable grid (9 placeholder cases)
+- `/about` — Studio, Founder + foto placeholder, Team (3 placeholder cards)
+- `/contact` — Calendly + email
+- `/not-found.tsx` — Własny 404 ("This page hit the cutting room floor.")
+- `/error.tsx` — Graceful error boundary z retry
+- `/loading.tsx` — Skeleton loader
 
----
+### Design system
+- Tokeny CSS — light corporate + dark cinematic (`.dark-zone` scope)
+- Typography: Raleway display + Inter body, font-variation `swap`
+- Tailwind tokens 1:1 z CSS vars (`tailwind.config.mjs`)
+- Grain overlay sitewide (SVG turbulence noise, 5.5% opacity)
+- Reading progress bar (native CSS scroll-timeline)
 
-### 4. Zbudować pełną logo wall "Trusted by" (§4.11 ze spec)
-**Plik:** `src/app/page.tsx`  
-Wstaw **po** Founder block, **przed** Final CTA.  
-To jest "heavy artillery" wg spec — dać mu dużo miejsca.
+### Komponenty UI
+- `Button` (5 variants + magnetic attribute na primary/secondary)
+- `Section` (spacing: tight/default/loose, surface: canvas/soft/dark)
+- `Eyebrow` (z optional `rule` prop = hairline rozciąga się na prawo)
+- `ScrollReveal` (re-usable wrapper z GSAP scroll-trigger)
+- `AnimatedPlaceholder` (4 warianty SVG: reel / tech / heavy / healthcare)
+- `CustomCursor` (brand-pink dot, magnetic pull na CTA, morfuje nad video tilami)
+- `CountUp` (ratings/stats animują od 0 z ease-out cubic na IntersectionObserver)
+- `BeforeAfterSlider` (drag/keyboard, ARIA slider — gotowy do case studies)
 
-Kiedy będą pliki SVG logotypów, zastąp tekst `<img>` tagami. Na razie:
+### Animacje 2026
+- Hero — kinetic line-reveal headline (clip-mask + GSAP expo.out)
+- Hero — scroll parallax na prawej kolumnie reel
+- SectorCards — 2.5D mouse-tracking tilt (perspective + rotateX/Y)
+- ServicesStrip — stagger reveal z grid algorithm
+- CapabilitiesMarquee — CSS-only infinite ticker (pauza on hover)
+- AIPipelineSequence — pinned scroll-scrub przez 4 etapy (Brief → Storyboard → AI gen → Delivery)
+- View Transitions API — page-to-page cross-fade
+- All sections — ScrollReveal z entrance animacjami
 
-```tsx
-{/* §4.11 Trusted by — logo wall */}
-<Section spacing="loose">
-  <div className="grid grid-cols-1 gap-10 md:grid-cols-12">
-    <div className="md:col-span-3">
-      <Eyebrow>Trusted by</Eyebrow>
-    </div>
-    <div className="md:col-span-9">
-      <ul className="grid grid-cols-3 gap-x-10 gap-y-8 sm:grid-cols-4 lg:grid-cols-6">
-        {[
-          'Aramco','Hilti','Roche','Bayer','Pfizer','Daikin',
-          'AWS','Outpost24','Alacriti','Santen','Sherwin Williams',
-          'R3','TF Kable','Harris Health','BT','KPMG','Paramount','MTV',
-        ].map((name) => (
-          <li key={name} className="flex items-center justify-center opacity-40 hover:opacity-70 transition-opacity">
-            {/* TODO: replace text with <img src={`/images/logos/clients/${name.toLowerCase().replace(' ','-')}.svg`} /> */}
-            <span className="font-display text-[13px] font-semibold uppercase tracking-widest text-content-primary">
-              {name}
-            </span>
-          </li>
-        ))}
-      </ul>
-    </div>
-  </div>
-</Section>
-```
+### SEO + Performance + A11y
+- `sitemap.xml` (auto, 8 URL-i)
+- `robots.txt` (allow all, disallow /api/, /_next/)
+- Dynamic OG image (`/opengraph-image` — 1200×630 generowane edge runtime)
+- JSON-LD Organization schema z `contactPoint` i `sameAs`
+- `<Image>` z `next/image` na logo (priority + auto AVIF)
+- Mobile menu: focus trap, body scroll lock, Escape close, role="dialog" + aria-modal
+- `prefers-reduced-motion` — wszystkie animacje wyłączone gdy user preferuje
+- `:focus-visible` outline na każdym interaktywnym elemencie
+- Semantic HTML wszędzie (`<section>`, `<nav>`, `<main id="main">`, ARIA labels)
 
 ---
 
-### 5. Dodać testimonials + customer story do Studio Access (§6 ze spec)
-**Plik:** `src/app/studio-access/page.tsx`  
-Wstaw między "How it works" a "CTA":
+## 🤝 Co czeka na materiały (NIE wymaga pracy programisty)
 
-```tsx
-{/* Customer story */}
-<Section spacing="loose" surface="soft">
-  <div className="grid grid-cols-1 gap-10 md:grid-cols-12">
-    <div className="md:col-span-3">
-      <Eyebrow>In practice</Eyebrow>
-    </div>
-    <div className="md:col-span-9">
-      <blockquote className="border-l-2 border-pink pl-6">
-        {/* TODO: replace with real quote from Szymon */}
-        <p className="font-body italic text-[1.15rem] leading-relaxed text-content-primary">
-          "Placeholder — quote about ongoing partnership goes here."
-        </p>
-        <footer className="mt-4">
-          <p className="text-body-sm font-medium text-content-primary">Name Surname</p>
-          <p className="mt-0.5 text-caption text-content-muted">Title · Company</p>
-        </footer>
-      </blockquote>
-    </div>
-  </div>
-</Section>
-```
+Wszystko poniżej to **podmiana 1:1** — placeholder już jest w kodzie z odpowiednim layoutem.
 
----
-
-### 6. Zbudować Selected Work mosaic (§4.6 ze spec)
-**Plik:** `src/app/page.tsx` — sekcja `05 · Selected work`  
-Obecny stan: tylko placeholder tekst.  
-Potrzeba: siatka 6–9 filmów, autoplay on hover, klik → Vimeo modal.  
-**Blokuje:** dostawa posterów i URL Vimeo od Szymona — zrobić gdy będą assety.
-
----
-
-## 🟡 Czeka na content od Szymona
-
-Wszystkie poniższe elementy są w kodzie jako placeholdery.
-Nie wymagają pracy deweloperskiej — tylko podmiana danych.
-
-### `src/lib/config.ts` — zmień gdy dostępne:
+### 1. Calendly URL
+Plik: `src/lib/config.ts:18`
 ```ts
-export const contact = {
-  calendly: 'https://calendly.com/seven-bison/intro',  // ← prawdziwy URL Calendly
-  email: 'hello@sevenbison.com',
-}
+calendly: 'https://calendly.com/seven-bison/intro',  // ← podmienić
 ```
 
-### `public/images/` — pliki graficzne:
-| Plik | Opis |
-|---|---|
-| `logos/seven-bison-logo-pink.svg` | Pełne logo (na razie: mark + tekst w CSS) |
-| `logos/clients/*.svg` | Loga klientów (Aramco, Hilti, Roche etc.) — SVG monochromatyczne |
-| `og-default.jpg` | Open Graph 1200×630 |
-| `favicon.ico` | 32×32 |
-| `apple-touch-icon.png` | 180×180 |
-
-### `public/videos/` — pliki wideo / postery:
-| Plik | Opis |
-|---|---|
-| `reel-poster.jpg` | Poster dla głównego reela w hero |
-| `sector-tech-poster.jpg` | Poster dla sekcji Tech |
-| `sector-heavy-poster.jpg` | Poster dla sekcji Heavy Industry |
-| `sector-healthcare-poster.jpg` | Poster dla sekcji Healthcare |
-| `case-outpost24-poster.jpg` | Case study poster |
-| `case-alacriti-poster.jpg` | Case study poster |
-| `case-aws-poster.jpg` | Case study poster |
-
-### Vimeo URL dla hero reela:
-W `src/app/page.tsx` znajdź `<Hero />` i dodaj prop `vimeoUrl`:
+### 2. Vimeo URL dla Hero reel
+Plik: `src/app/page.tsx`
 ```tsx
-<Hero vimeoUrl="https://player.vimeo.com/video/TWÓJ_ID" />
+<Hero vimeoUrl="https://player.vimeo.com/video/TWOJ_VIMEO_ID" />
 ```
 
-### Cytaty (Testimonials):
-W `src/app/tech/page.tsx`, `heavy-industry/page.tsx`, `healthcare-pharma/page.tsx`
-znajdź tablicę `const quotes = [...]` i podmień placeholder na prawdziwe cytaty.
+### 3. Zdjęcie Szymonka (4:5 portret)
+Wrzuć plik: `public/images/founder.jpg`
+Potem podmień w 2 miejscach:
+- `src/components/home/FounderTeaser.tsx:73-88` — usuń `<svg>` + `<p>` placeholder, dodaj:
+  ```tsx
+  <Image src="/images/founder.jpg" alt="Szymon Wojewski" fill className="object-cover" />
+  ```
+- `src/app/about/page.tsx:80-95` — to samo
 
-### Zdjęcie Szymona:
-Podmień placeholder `<div className="h-32 w-32 ...">` w Founder block na:
-```tsx
-<img src="/images/szymon-wojewski.jpg" alt="Szymon Wojewski" className="h-32 w-32 object-cover" />
+### 4. Loga klientów (18 brandów, SVG monochrome)
+Wrzuć pliki do: `public/images/logos/clients/`
+- `aramco.svg`, `hilti.svg`, `roche.svg`, `bayer.svg`, `pfizer.svg`, `daikin.svg`, `aws.svg`, `outpost24.svg`, `alacriti.svg`, `santen.svg`, `sherwin-williams.svg`, `r3.svg`, `tf-kable.svg`, `harris-health.svg`, `bt.svg`, `kpmg.svg`, `paramount.svg`, `mtv.svg`
+
+Potem w `src/components/home/LogoWall.tsx` i `TrustStrip.tsx` zamień text na `<Image>`.
+
+### 5. Postery sektorowe / case studies
+Wrzuć do `public/videos/`:
+- Hero reel poster: `reel-poster.jpg` (1920×1080)
+- Sector posters: `sector-tech-poster.jpg`, `sector-heavy-poster.jpg`, `sector-healthcare-poster.jpg`
+- Case study posters (1280×960): `case-outpost24-poster.jpg`, `case-alacriti-poster.jpg`, `case-aws-poster.jpg`, `case-aramco-poster.jpg`, `case-hilti-poster.jpg`, `case-tfkable-poster.jpg`, `case-roche-poster.jpg`, `case-bayer-poster.jpg`, `case-santen-poster.jpg`
+
+Ścieżki są **już wpisane** w kodzie — pliki same się załadują, placeholdery automatycznie znikną pod nimi.
+
+### 6. Real testimonials (4 cytaty)
+Plik: `src/app/page.tsx:24-49` — zamień `Placeholder Name`, `Head of Brand` itp. na realne dane.
+Dodatkowo w każdej stronie sektorowej (`tech`, `heavy-industry`, `healthcare-pharma`) — tablica `const quotes` na początku pliku.
+
+### 7. Case study pages (gdy będą gotowe)
+Obecnie wszystkie linki z kart sektorowych prowadzą na `/portfolio`.
+Gdy powstaną osobne case study pages (np. `/portfolio/outpost24`), zmień w tablicach `cases` w `tech/page.tsx`, `heavy-industry/page.tsx`, `healthcare-pharma/page.tsx`:
+```ts
+href: '/portfolio'  →  href: '/portfolio/outpost24'
 ```
 
 ---
 
-## Stare pliki Astro (można usunąć)
-
-Następujące pliki to pozostałości poprzedniej wersji (Astro framework).
-**Next.js je ignoruje** — nie wpływają na działanie strony.
-Można je usunąć dla porządku:
+## 🗂️ Struktura plików — szybki cheatsheet
 
 ```
-src/pages/*.astro
-src/layouts/BaseLayout.astro
-src/components/**/*.astro
-src/content/
-astro.config.mjs
+src/
+├── app/                        # Routing (Next.js App Router)
+│   ├── layout.tsx              # Root layout, JSON-LD, cursor, grain
+│   ├── page.tsx                # Homepage
+│   ├── not-found.tsx           # 404
+│   ├── error.tsx               # Error boundary
+│   ├── loading.tsx             # Loading skeleton
+│   ├── opengraph-image.tsx     # Dynamic OG image (edge runtime)
+│   ├── sitemap.ts              # sitemap.xml generator
+│   ├── robots.ts               # robots.txt generator
+│   ├── tech/page.tsx
+│   ├── heavy-industry/page.tsx
+│   ├── healthcare-pharma/page.tsx
+│   ├── studio-access/page.tsx
+│   ├── portfolio/page.tsx
+│   ├── about/page.tsx
+│   └── contact/page.tsx
+│
+├── components/
+│   ├── layout/
+│   │   ├── Header.tsx          # Sticky nav + mobile drawer (a11y)
+│   │   └── Footer.tsx
+│   ├── home/                   # Homepage sections
+│   │   ├── Hero.tsx            # Split-frame + line-reveal headline
+│   │   ├── TrustStrip.tsx      # Ratings z CountUp
+│   │   ├── LogoWall.tsx        # 18 brands
+│   │   ├── CapabilitiesMarquee.tsx
+│   │   ├── EndToEndPartner.tsx
+│   │   ├── ServicesStrip.tsx   # 8 dyscyplin
+│   │   ├── SectorCards.tsx     # 2.5D tilt + dark cinematic thumbs
+│   │   ├── HowWeWork.tsx
+│   │   ├── AIPipelineSequence.tsx  # Scroll-scrub pin section
+│   │   └── FounderTeaser.tsx
+│   ├── sector/                 # Used by /tech, /heavy-industry, /healthcare-pharma
+│   │   ├── SectorHero.tsx
+│   │   ├── PainPoints.tsx
+│   │   ├── SubsectorNav.tsx
+│   │   ├── SectorCaseGrid.tsx
+│   │   └── Testimonials.tsx
+│   └── ui/                     # Re-usable building blocks
+│       ├── Button.tsx
+│       ├── Section.tsx
+│       ├── Eyebrow.tsx
+│       ├── ScrollReveal.tsx
+│       ├── AnimatedPlaceholder.tsx
+│       ├── CustomCursor.tsx
+│       ├── CountUp.tsx
+│       └── BeforeAfterSlider.tsx
+│
+├── lib/
+│   ├── config.ts               # Single source of truth (site, nav, sectors, services, contact)
+│   └── gsap.ts                 # GSAP plugin registration
+│
+└── styles/
+    └── global.css              # Design tokens + utilities + 2026 enhancements
 ```
-
-Albo zostawić — nie szkodzą.
 
 ---
 
-## Design system — szybki cheatsheet
+## 🎨 Design tokens — cheatsheet
 
-| Klasa Tailwind | Co robi |
+| Tailwind class | Resolves to |
 |---|---|
-| `font-display` | Raleway — nagłówki |
-| `font-body` | Inter — tekst |
-| `text-content-primary` | Główny tekst (#111 jasny / #FFF ciemny) |
-| `text-content-secondary` | Wtórny tekst |
-| `text-content-muted` | Przygaszone (meta, labels) |
-| `text-pink` | Akcent #E80787 |
-| `bg-canvas` | Tło (krem #F7F5F2 / czarne w dark-zone) |
-| `bg-canvas-soft` | Lekko ciemniejsze tło |
-| `border-hairline` | Subtelna linia podziału |
-| `dark-zone` | Klasa na rodzicu = przełącza tokeny na Dark Cinematic |
-| `eyebrow` | Mały uppercase label różowy (preset w CSS) |
-| `container-site` | Kontener z marginesami strony |
-
-### Tryb ciemny (Dark Cinematic)
-Dodaj klasę `dark-zone` do kontenera — wszystkie tokeny `bg-canvas`, `text-content-*`
-automatycznie przyjmą wartości ciemne. Używane w prawej kolumnie hero i sekcjach z `surface="dark"`.
+| `bg-canvas` | `#F7F5F2` (light) / `#000` (dark-zone) |
+| `bg-canvas-soft` | `#F2F0ED` (light) / `#111` (dark) |
+| `bg-canvas-muted` | `#E8E8E8` (light) / `#1A1A1A` (dark) |
+| `text-content-primary` | `#111111` / `#FFFFFF` |
+| `text-content-secondary` | `#2A2A2A` / `rgba(255,255,255,0.85)` |
+| `text-content-muted` | `#6F6F6F` / `#B8B8B8` |
+| `text-pink` | `#E80787` (brand pink) |
+| `border-hairline` | 1px subtelna linia |
+| `font-display` | Raleway (h1-h4) |
+| `font-body` | Inter (body, captions) |
+| `.eyebrow` | Mały uppercase różowy label |
+| `.container-site` | Max 1440px, padding 80px/40px/24px responsive |
+| `.dark-zone` | Klasa na rodzicu — przełącza wszystkie tokeny na ciemne |
 
 ---
 
-## Jak działają animacje GSAP
+## 🎬 Custom cursor + magnetic — jak dodawać interakcje
 
-Każdy komponent `'use client'` z animacją używa `useGSAP` z `@gsap/react`.
-Animacje uruchamiają się gdy element wchodzi w viewport (`ScrollTrigger`).
-
-Żeby dodać nową animację:
+**Magnetic pull** (button się przyciąga do kursora):
 ```tsx
-'use client'
-import { useRef } from 'react'
-import { useGSAP } from '@gsap/react'
-import { gsap, ScrollTrigger } from '@/lib/gsap'
+<button data-magnetic>Click me</button>
+```
+Wszystkie `<Button variant="primary"|"secondary">` mają to automatycznie.
 
-const ref = useRef<HTMLDivElement>(null)
+**Cursor "PLAY" state** (różowy 68px ring z napisem PLAY nad video):
+```tsx
+<div data-cursor="play">...</div>
+```
+Już zastosowane na sector card thumbnails i BeforeAfterSlider.
 
-useGSAP(() => {
-  gsap.from('.moja-klasa', {
-    y: 32,
-    opacity: 0,
-    duration: 0.8,
-    scrollTrigger: { trigger: ref.current, start: 'top 80%' },
-  })
-}, { scope: ref })
+---
+
+## 🚀 Deploy
+
+### Vercel (rekomendowane)
+```bash
+# Połącz repo GitHub z Vercel — auto deploy z main branch.
+# Edge runtime dla OG image działa out-of-the-box.
 ```
 
+### Inne (Netlify, Cloudflare Pages, AWS Amplify)
+- Build command: `npm run build`
+- Output directory: `.next/`
+- Node version: 20+ (Next.js 15 wymaga)
+
+### Self-hosted (Docker / VPS)
+```bash
+npm run build
+npm run start  # nasłuchuje na PORT z env (default 3000)
+```
+
+### Static export (jeśli klient nie chce SSR)
+Odkomentuj w `next.config.ts`:
+```ts
+output: 'export',
+```
+Potem `npm run build` wyprodukuje `out/` do uploadu na zwykły hosting.
+**Uwaga:** static export wyłącza dynamic OG image — trzeba wtedy ręcznie podać URL do `public/images/og.jpg`.
+
 ---
 
-*DEVHANDOFF.md — Seven Bison website · 2026-05-27*
+## 📜 Wymagania środowiska
+
+- Node.js **20+** (Next.js 15)
+- npm 10+ (lub pnpm / yarn — działa wszystko)
+- Git
+- Modern browser do dev (Chrome 111+, Safari 18+, Firefox 130+ dla View Transitions / scroll-timeline)
+
+---
+
+## 🔗 Linki
+
+- **Repo:** https://github.com/Szawar11/seven-bison-website
+- **Produkcja (po deploy):** https://sevenbison.com
+- **Vercel preview:** *(do skonfigurowania)*
+
+---
+
+## 📋 Changelog (ostatnie commity)
+
+| Commit | Co |
+|---|---|
+| `b69e0a0` | SEO + a11y foundations: sitemap, robots, OG image, JSON-LD, 404/error/loading, mobile menu a11y, next/image |
+| `6d96b0b` | Cinematic sector thumbs (czarne tło) + solid brand-pink cursor z glow |
+| `768484c` | 2026 trends: grain, marquee, line-reveal hero, count-up, AI pipeline scroll-scrub, view transitions, before/after slider |
+| `72632cd` | Media placeholders: case study cards, about founder photo, team cards, portfolio grid |
+| `8a6473e` | Fix: redirect broken case study links to /portfolio |
+| `97d25b8` | Initial commit — Seven Bison website |
+
+---
+
+*DEVHANDOFF.md — Seven Bison v2.0 · 2026-05-27*
