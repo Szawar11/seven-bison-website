@@ -3,6 +3,7 @@ import { Raleway, Inter } from 'next/font/google'
 import '@/styles/global.css'
 import { Header } from '@/components/layout/Header'
 import { Footer } from '@/components/layout/Footer'
+import { CustomCursor } from '@/components/ui/CustomCursor'
 import { site } from '@/lib/config'
 
 /* ── Fonts ────────────────────────────────────────────────────────── */
@@ -60,6 +61,11 @@ export default function RootLayout({
       className={`${raleway.variable} ${inter.variable}`}
     >
       <body>
+        {/* 2026 layer: reading progress, grain texture, magnetic cursor */}
+        <div className="scroll-progress" aria-hidden="true" />
+        <div className="grain-layer" aria-hidden="true" />
+        <CustomCursor />
+
         <Header />
         <main id="main">{children}</main>
         <Footer />

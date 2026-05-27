@@ -7,6 +7,8 @@ import { ServicesStrip } from '@/components/home/ServicesStrip'
 import { SectorCards } from '@/components/home/SectorCards'
 import { HowWeWork } from '@/components/home/HowWeWork'
 import { FounderTeaser } from '@/components/home/FounderTeaser'
+import { CapabilitiesMarquee } from '@/components/home/CapabilitiesMarquee'
+import { AIPipelineSequence } from '@/components/home/AIPipelineSequence'
 import { Testimonials } from '@/components/sector/Testimonials'
 import { Section } from '@/components/ui/Section'
 import { ScrollReveal } from '@/components/ui/ScrollReveal'
@@ -63,6 +65,9 @@ export default function HomePage() {
       {/* Client logo wall — 18 anchor brands */}
       <LogoWall />
 
+      {/* Capabilities marquee — infinite ticker between hero/logos and services */}
+      <CapabilitiesMarquee />
+
       {/* §4.4 Services */}
       <ServicesStrip />
 
@@ -100,6 +105,9 @@ export default function HomePage() {
 
       {/* §4.7 How we work */}
       <HowWeWork />
+
+      {/* AI Pipeline — scroll-scrubbed 4-stage transformation (dark zone) */}
+      <AIPipelineSequence />
 
       {/*
         §4.6 Selected work mosaic — Dark Cinematic zone

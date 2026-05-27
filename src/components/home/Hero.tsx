@@ -30,8 +30,14 @@ export function Hero({
       })
 
       tl.from('.hero-eyebrow', { y: 12, opacity: 0, duration: 0.5 })
-        .from('.hero-headline',  { y: 48, opacity: 0, duration: 0.9 }, '-=0.2')
-        .from('.hero-lead',      { y: 24, opacity: 0, duration: 0.7 }, '-=0.5')
+        // Kinetic line-reveal — each line slides up from under clip mask
+        .to('.hero-headline .line', {
+          y: '0%',
+          stagger: 0.12,
+          duration: 1.0,
+          ease: 'expo.out',
+        }, '-=0.2')
+        .from('.hero-lead',      { y: 24, opacity: 0, duration: 0.7 }, '-=0.7')
         .from('.hero-cta',       { y: 16, opacity: 0, duration: 0.6 }, '-=0.4')
         .from('.hero-industries > *', {
           y: 28, opacity: 0, stagger: 0.08, duration: 0.6,
@@ -73,8 +79,13 @@ export function Hero({
           </p>
 
           <h1 className="hero-headline mt-4 max-w-[16ch] text-content-primary font-display">
-            Video craft and art,{' '}
-            <span className="text-pink">delivered at scale.</span>
+            {/* Each line wrapped for clip-mask reveal (see .line-reveal in global.css) */}
+            <span className="line-reveal">
+              <span className="line">Video craft and art,</span>
+            </span>
+            <span className="line-reveal">
+              <span className="line text-pink">delivered at scale.</span>
+            </span>
           </h1>
 
           <p className="hero-lead mt-6 max-w-readable text-lead text-content-secondary">

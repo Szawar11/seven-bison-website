@@ -72,6 +72,9 @@ export function Button({
 }: Props) {
   const classes = `${base} ${variants[variant]} ${className}`
 
+  // Primary / secondary CTAs get magnetic pull (subtle attraction to cursor)
+  const magneticAttr = (variant === 'primary' || variant === 'secondary') ? { 'data-magnetic': '' } : {}
+
   if (href) {
     if (external || href.startsWith('http') || href.startsWith('mailto')) {
       return (
@@ -80,6 +83,7 @@ export function Button({
           target={external ? '_blank' : undefined}
           rel={external ? 'noopener noreferrer' : undefined}
           className={classes}
+          {...magneticAttr}
         >
           {children}
           {variant === 'text' && <ArrowRight size={14} strokeWidth={2} aria-hidden="true" className="transition-transform duration-micro group-hover:translate-x-1" />}
@@ -87,7 +91,7 @@ export function Button({
       )
     }
     return (
-      <Link href={href} className={classes}>
+      <Link href={href} className={classes} {...magneticAttr}>
         {children}
         {variant === 'text' && <ArrowRight size={14} strokeWidth={2} aria-hidden="true" className="transition-transform duration-micro group-hover:translate-x-1" />}
       </Link>
@@ -100,6 +104,7 @@ export function Button({
       onClick={onClick}
       disabled={disabled}
       className={classes}
+      {...magneticAttr}
     >
       {children}
       {variant === 'text' && <span aria-hidden="true">→</span>}

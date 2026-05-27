@@ -3,6 +3,7 @@
 import { useRef } from 'react'
 import { useGSAP } from '@gsap/react'
 import { gsap, ScrollTrigger } from '@/lib/gsap'
+import { CountUp } from '@/components/ui/CountUp'
 
 interface Props {
   google?: { rating: number; count: number }
@@ -54,18 +55,24 @@ export function TrustStrip({
           <div className="trust-rating flex items-center gap-5 text-caption text-content-muted">
             <span className="flex items-center gap-1.5">
               <span className="text-pink">★</span>
-              <span className="font-medium text-content-primary">
-                {google.rating.toFixed(1)}
-              </span>
-              <span>Google ({google.count})</span>
+              <CountUp
+                to={google.rating}
+                decimals={1}
+                duration={1200}
+                className="font-medium tabular-nums text-content-primary"
+              />
+              <span>Google (<CountUp to={google.count} duration={1400} className="tabular-nums" />)</span>
             </span>
             <span className="h-4 w-px bg-hairline" aria-hidden="true" />
             <span className="flex items-center gap-1.5">
               <span className="text-pink">★</span>
-              <span className="font-medium text-content-primary">
-                {clutch.rating.toFixed(1)}
-              </span>
-              <span>Clutch ({clutch.count})</span>
+              <CountUp
+                to={clutch.rating}
+                decimals={1}
+                duration={1200}
+                className="font-medium tabular-nums text-content-primary"
+              />
+              <span>Clutch (<CountUp to={clutch.count} duration={1400} className="tabular-nums" />)</span>
             </span>
           </div>
 

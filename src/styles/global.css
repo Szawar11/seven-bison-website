@@ -324,4 +324,172 @@
   .btn-glow:active {
     box-shadow: 0 0 0 2px rgba(232, 7, 135, 0.20);
   }
+
+  /* ─────────────────────────────────────────────────────────────────
+   * 2026 ENHANCEMENTS — grain, reading progress, magnetic cursor,
+   * link underlines, view transitions, marquee, kinetic headlines
+   * ───────────────────────────────────────────────────────────────── */
+
+  /*
+   * Sitewide grain overlay — SVG turbulence noise at 5% opacity.
+   * Renders above content but pointer-events:none. Adds filmic texture
+   * to flat color washes. Apply via .grain-layer div at <body> root.
+   */
+  .grain-layer {
+    position: fixed;
+    inset: 0;
+    pointer-events: none;
+    z-index: 60;
+    opacity: 0.055;
+    mix-blend-mode: multiply;
+    background-image: url("data:image/svg+xml;utf8,<svg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' seed='3' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 1 0'/></filter><rect width='100%25' height='100%25' filter='url(%23n)'/></svg>");
+    background-size: 200px;
+  }
+  .dark-zone .grain-layer { mix-blend-mode: screen; opacity: 0.08; }
+
+  /*
+   * Reading progress — thin pink hairline at top of viewport.
+   * Uses native CSS scroll-timeline (Chrome/Edge/Safari 2026). Compositor-thread.
+   * Position fixed under header. Below threshold, completely invisible.
+   */
+  .scroll-progress {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 2px;
+    width: 100%;
+    background: linear-gradient(90deg, #E80787, #E80787 var(--progress, 0%), transparent var(--progress, 0%));
+    z-index: 70;
+    pointer-events: none;
+    transform-origin: left center;
+  }
+  @supports (animation-timeline: scroll()) {
+    .scroll-progress {
+      background: #E80787;
+      transform: scaleX(0);
+      animation: progress-fill linear;
+      animation-timeline: scroll(root);
+    }
+    @keyframes progress-fill {
+      to { transform: scaleX(1); }
+    }
+  }
+
+  /*
+   * Animated link underline — clip-path wipe L→R on hover.
+   * Sharper than opacity fade. Use on inline text links and nav items.
+   */
+  .link-underline {
+    position: relative;
+    display: inline-block;
+  }
+  .link-underline::after {
+    content: '';
+    position: absolute;
+    left: 0; right: 0; bottom: -2px;
+    height: 1px;
+    background: currentColor;
+    clip-path: inset(0 100% 0 0);
+    transition: clip-path 350ms cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  .link-underline:hover::after,
+  .link-underline:focus-visible::after {
+    clip-path: inset(0 0% 0 0);
+  }
+
+  /*
+   * Custom cursor — small pink dot with delayed follow.
+   * Position/scale driven by JS (CustomCursor.tsx). Hidden on touch devices.
+   */
+  .custom-cursor {
+    position: fixed;
+    top: 0; left: 0;
+    width: 10px;
+    height: 10px;
+    border-radius: 50%;
+    background: #E80787;
+    pointer-events: none;
+    z-index: 100;
+    transform: translate3d(-50%, -50%, 0);
+    mix-blend-mode: difference;
+    transition: width 250ms var(--ease-brand),
+                height 250ms var(--ease-brand),
+                background 250ms var(--ease-brand),
+                opacity 200ms ease;
+    will-change: transform;
+  }
+  .custom-cursor[data-variant="link"]    { width: 32px; height: 32px; background: rgba(232, 7, 135, 0.7); }
+  .custom-cursor[data-variant="play"]    { width: 64px; height: 64px; background: #E80787; mix-blend-mode: normal; }
+  .custom-cursor[data-variant="hidden"]  { opacity: 0; }
+  .custom-cursor-label {
+    position: absolute;
+    inset: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    font-family: var(--font-inter), system-ui, sans-serif;
+    font-size: 9px;
+    font-weight: 600;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    opacity: 0;
+    transition: opacity 200ms ease;
+  }
+  .custom-cursor[data-variant="play"] .custom-cursor-label { opacity: 1; }
+  @media (hover: none), (pointer: coarse) {
+    .custom-cursor { display: none; }
+  }
+
+  /*
+   * Marquee — CSS-only infinite horizontal scroll.
+   * Items in track duplicate to allow seamless loop.
+   */
+  .marquee {
+    overflow: hidden;
+    -webkit-mask-image: linear-gradient(90deg, transparent 0, #000 6%, #000 94%, transparent 100%);
+    mask-image: linear-gradient(90deg, transparent 0, #000 6%, #000 94%, transparent 100%);
+  }
+  .marquee-track {
+    display: flex;
+    width: max-content;
+    animation: marquee-scroll 55s linear infinite;
+  }
+  .marquee-track:hover { animation-play-state: paused; }
+  @keyframes marquee-scroll {
+    from { transform: translateX(0); }
+    to   { transform: translateX(-50%); }
+  }
+
+  /*
+   * Kinetic headline — per-line clip-mask reveal.
+   * Applied via [data-line-reveal] elements; each child <span class="line">
+   * gets clip-path animation on GSAP scroll-trigger or load.
+   */
+  .line-reveal {
+    overflow: hidden;
+    display: block;
+  }
+  .line-reveal > .line {
+    display: block;
+    transform: translateY(110%);
+    will-change: transform;
+  }
+
+  /*
+   * View Transitions API — page-to-page cross-fade with pink hairline wipe.
+   * Stable in Chrome 111+, Safari 18+, Firefox via flag (2026 universal).
+   */
+  ::view-transition-old(root) {
+    animation: vt-fade-out 280ms cubic-bezier(0.16, 1, 0.3, 1) both;
+  }
+  ::view-transition-new(root) {
+    animation: vt-fade-in 380ms cubic-bezier(0.16, 1, 0.3, 1) both;
+  }
+  @keyframes vt-fade-out {
+    to { opacity: 0; transform: translateY(-8px); }
+  }
+  @keyframes vt-fade-in {
+    from { opacity: 0; transform: translateY(8px); }
+  }
 }
