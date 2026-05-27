@@ -10,6 +10,13 @@ export const metadata: Metadata = {
     'Seven Bison is a premium B2B video and motion studio. AI-native production, human craft. Founder-led.',
 }
 
+// Placeholder team members — replace with real data when available
+const teamPlaceholders = [
+  { role: 'Motion Designer', speciality: '2D / 3D Animation' },
+  { role: 'AI Production Lead', speciality: 'Cinematic & VFX' },
+  { role: 'Creative Strategist', speciality: 'Concept & Script' },
+]
+
 export default function AboutPage() {
   return (
     <>
@@ -27,7 +34,7 @@ export default function AboutPage() {
       <Section spacing="loose">
         <div className="grid grid-cols-1 gap-10 md:grid-cols-12">
           <div className="md:col-span-3">
-            <Eyebrow>The studio</Eyebrow>
+            <Eyebrow rule>The studio</Eyebrow>
           </div>
           <div className="md:col-span-9">
             <h2 className="max-w-readable font-display text-content-primary">
@@ -47,25 +54,31 @@ export default function AboutPage() {
         </div>
       </Section>
 
-      {/* Founder — heavy artillery, not buried */}
+      {/* Founder — photo placeholder + bio */}
       <Section spacing="loose" surface="soft">
         <div className="grid grid-cols-1 gap-10 md:grid-cols-12">
           <div className="md:col-span-3">
-            <Eyebrow>Founder</Eyebrow>
+            <Eyebrow rule>Founder</Eyebrow>
           </div>
-          <div className="md:col-span-9">
-            {/* TODO: add Szymon's photo when available */}
-            <h2 className="max-w-readable font-display text-content-primary">
+
+          {/* Bio column */}
+          <div className="md:col-span-5">
+            <h2 className="font-display text-content-primary">
               Szymon Wojewski.
             </h2>
-            <p className="mt-5 max-w-readable text-lead text-content-secondary">
+            <p className="mt-4 text-lead text-content-secondary">
+              Bloomberg UK news editor. Getty Images.
+              Then — Seven Bison.
+            </p>
+            <p className="mt-4 text-body text-content-secondary">
               Background in news editing at Bloomberg UK and Getty Images before
               building Seven Bison. That background shapes how the studio works:
-              editorial discipline, deadline reliability, and comfort with complex
-              subject matter.
+              editorial discipline, deadline reliability, and real comfort with
+              complex subject matter.
             </p>
-            <p className="mt-4 max-w-readable text-body text-content-secondary">
-              Every intro call goes through Szymon directly.
+            <p className="mt-4 text-body text-content-secondary">
+              Every intro call goes through Szymon directly — no discovery-call
+              relay, no sales handoff.
             </p>
             <div className="mt-8">
               <Button variant="primary" href={contact.calendly} external>
@@ -73,25 +86,77 @@ export default function AboutPage() {
               </Button>
             </div>
           </div>
+
+          {/* Photo placeholder — replace <div> with <Image> when photo is ready */}
+          <div className="md:col-span-4">
+            <div className="relative aspect-[4/5] w-full overflow-hidden border border-hairline bg-canvas-muted">
+              {/* Placeholder grid lines — remove once real photo is in */}
+              <svg
+                className="absolute inset-0 h-full w-full opacity-20"
+                viewBox="0 0 4 5"
+                preserveAspectRatio="none"
+                aria-hidden="true"
+              >
+                <line x1="0" y1="2.5" x2="4" y2="2.5" stroke="#E80787" strokeWidth="0.04" />
+                <line x1="2" y1="0" x2="2" y2="5"   stroke="#E80787" strokeWidth="0.04" />
+              </svg>
+              <p className="absolute inset-0 flex items-center justify-center text-caption text-content-disabled">
+                Founder photo
+              </p>
+            </div>
+          </div>
         </div>
       </Section>
 
-      {/* Team */}
+      {/* Team — placeholder cards */}
       <Section spacing="loose">
         <div className="grid grid-cols-1 gap-10 md:grid-cols-12">
           <div className="md:col-span-3">
-            <Eyebrow>Team</Eyebrow>
+            <Eyebrow rule>Team</Eyebrow>
           </div>
           <div className="md:col-span-9">
             <h2 className="max-w-readable font-display text-content-primary">
               A small core. Specialist depth.
             </h2>
             <p className="mt-5 max-w-readable text-lead text-content-secondary">
-              {/* TODO: add team blocks with photos and brief credentials */}
-              Core team and specialist collaborators. Photos and credentials
-              to follow. No headcount numbers — depth signals scale here,
-              not headcount claims.
+              Core team and specialist collaborators. Chosen for sector depth,
+              not headcount.
             </p>
+
+            {/* Team placeholder cards — replace with real team data when ready */}
+            <ul className="mt-10 grid grid-cols-1 gap-6 sm:grid-cols-3">
+              {teamPlaceholders.map((member, i) => (
+                <li key={i} className="border border-hairline bg-canvas-soft">
+                  {/* Photo placeholder */}
+                  <div className="relative aspect-square overflow-hidden bg-canvas-muted">
+                    <svg
+                      className="absolute inset-0 h-full w-full opacity-15"
+                      viewBox="0 0 1 1"
+                      preserveAspectRatio="none"
+                      aria-hidden="true"
+                    >
+                      <line x1="0" y1="0.5" x2="1" y2="0.5" stroke="#E80787" strokeWidth="0.01" />
+                      <line x1="0.5" y1="0" x2="0.5" y2="1" stroke="#E80787" strokeWidth="0.01" />
+                    </svg>
+                    <p className="absolute inset-0 flex items-center justify-center text-caption text-content-disabled">
+                      Photo
+                    </p>
+                  </div>
+                  {/* Name + role */}
+                  <div className="p-5">
+                    <p className="font-display font-medium text-content-disabled">
+                      Team member {i + 1}
+                    </p>
+                    <p className="mt-1 text-caption text-content-disabled">
+                      {member.role}
+                    </p>
+                    <p className="mt-0.5 eyebrow text-[10px] text-content-disabled">
+                      {member.speciality}
+                    </p>
+                  </div>
+                </li>
+              ))}
+            </ul>
           </div>
         </div>
       </Section>

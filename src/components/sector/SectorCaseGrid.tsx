@@ -70,13 +70,24 @@ export function SectorCaseGrid({ eyebrow = 'Selected work', heading, cases }: Pr
 
         <ul className="case-grid grid grid-cols-1 gap-6 md:grid-cols-3">
           {cases.map((c) => (
-            <li key={c.href} className="case-card">
+            <li key={c.brand} className="case-card">
               <Link
                 href={c.href}
                 className="group flex h-full flex-col border border-hairline bg-canvas overflow-hidden surface-interactive hover:border-pink card-lift"
               >
                 {/* Poster */}
                 <div className="relative aspect-card w-full overflow-hidden bg-canvas-muted">
+                  {/* Generic video placeholder — remove once real poster exists */}
+                  <div className="absolute inset-0 flex flex-col items-center justify-center gap-2 bg-canvas-muted">
+                    <svg viewBox="0 0 80 60" className="w-16 opacity-20" fill="none" aria-hidden="true">
+                      <rect x="0.5" y="0.5" width="79" height="59" stroke="currentColor" strokeDasharray="5 3"/>
+                      <line x1="0" y1="30" x2="80" y2="30" stroke="currentColor" strokeWidth="0.5"/>
+                      <line x1="40" y1="0" x2="40" y2="60" stroke="currentColor" strokeWidth="0.5"/>
+                      <circle cx="40" cy="30" r="11" stroke="#E80787" strokeWidth="1.2" fill="none"/>
+                      <polygon points="37,25.5 37,34.5 46,30" fill="#E80787" opacity="0.5"/>
+                    </svg>
+                    <p className="text-[10px] text-content-disabled tracking-wide uppercase">Video coming soon</p>
+                  </div>
                   {c.poster && (
                     <div
                       className="absolute inset-0 bg-cover bg-center transition-transform duration-500 ease-brand group-hover:scale-[1.03]"
