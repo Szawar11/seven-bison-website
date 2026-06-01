@@ -59,7 +59,7 @@ export function HowWeWork() {
       <div ref={ref}>
         <div className="hww-header mb-12 grid grid-cols-1 gap-8 md:grid-cols-12">
           <div className="md:col-span-3">
-            <Eyebrow rule data-reveal>06 · How we work</Eyebrow>
+            <Eyebrow rule data-reveal>How we work</Eyebrow>
           </div>
           <div className="md:col-span-9">
             <h2 data-reveal className="max-w-readable font-display text-content-primary">

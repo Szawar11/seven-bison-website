@@ -6,30 +6,12 @@ import { gsap, ScrollTrigger } from '@/lib/gsap'
 import { Section } from '@/components/ui/Section'
 import { Eyebrow } from '@/components/ui/Eyebrow'
 import { services } from '@/lib/config'
-import {
-  Lightbulb, Layers, Film, Scissors,
-  PersonStanding, Wand2, PenTool, Box,
-  type LucideIcon,
-} from 'lucide-react'
-
-/** One icon per service — same order as config.ts `services` array */
-const serviceIcons: LucideIcon[] = [
-  Lightbulb,       // Creative Storytelling
-  Layers,          // 2D / 3D Motion Design
-  Film,            // Cinematic AI Image & Video
-  Scissors,        // Short-Form Editing
-  PersonStanding,  // 2D / 3D Character Animation
-  Wand2,           // VFX / Compositing
-  PenTool,         // Graphic Design & Illustration
-  Box,             // 3D Modelling
-]
 
 export function ServicesStrip() {
   const ref = useRef<HTMLDivElement>(null)
 
   useGSAP(
     () => {
-      /* Header reveals */
       gsap.from('.services-header [data-reveal]', {
         y: 24,
         opacity: 0,
@@ -42,20 +24,15 @@ export function ServicesStrip() {
         },
       })
 
-      /* Tiles — stagger in with clip-path wipe from bottom */
-      gsap.from('.service-tile', {
-        y: 40,
+      gsap.from('.service-row', {
+        y: 24,
         opacity: 0,
-        stagger: {
-          each: 0.06,
-          grid: 'auto',
-          from: 'start',
-        },
-        duration: 0.65,
+        stagger: 0.06,
+        duration: 0.7,
         ease: 'power3.out',
         scrollTrigger: {
-          trigger: '.services-grid',
-          start: 'top 78%',
+          trigger: '.services-list',
+          start: 'top 82%',
           toggleActions: 'play none none none',
         },
       })
@@ -67,9 +44,9 @@ export function ServicesStrip() {
     <Section spacing="loose" surface="soft">
       <div ref={ref}>
         {/* Header */}
-        <div className="services-header mb-10 grid grid-cols-1 gap-8 md:grid-cols-12">
+        <div className="services-header mb-12 grid grid-cols-1 gap-8 md:grid-cols-12">
           <div className="md:col-span-3">
-            <Eyebrow rule data-reveal>03 · What we do</Eyebrow>
+            <Eyebrow rule data-reveal>What we do</Eyebrow>
           </div>
           <div className="md:col-span-9">
             <h2 data-reveal className="max-w-readable font-display text-content-primary">
@@ -78,44 +55,28 @@ export function ServicesStrip() {
           </div>
         </div>
 
-        {/*
-         * Grid — 2 cols on sm/md/lg, 4 cols only at xl (1280px+).
-         * Keeps tiles wide enough for titles not to break at awkward points.
-         * gap-px + bg-hairline creates the hairline-separated table look.
-         */}
-        <ul className="services-grid grid grid-cols-1 gap-px overflow-hidden border border-hairline bg-hairline sm:grid-cols-2 xl:grid-cols-4">
+        {/* List — no icons, no boxes. Editorial line items with hairline dividers. */}
+        <ul className="services-list border-t border-hairline">
           {services.map((service, i) => {
-            const Icon = serviceIcons[i]
             const desc = 'description' in service ? service.description : undefined
             return (
               <li
                 key={service.title}
-                className="service-tile group flex flex-col bg-canvas p-5 xl:p-6 surface-interactive hover:bg-canvas-soft"
+                className="service-row group grid grid-cols-12 items-baseline gap-6 border-b border-hairline py-6 transition-colors duration-micro hover:bg-canvas"
               >
-                {/* Icon + number row */}
-                <div className="flex items-start justify-between">
-                  {/* Icon with animated container */}
-                  <div className="flex h-9 w-9 items-center justify-center rounded-sm border border-hairline bg-canvas-soft transition-all duration-micro group-hover:border-pink/20 group-hover:bg-pink/[0.04]">
-                    <Icon
-                      size={18}
-                      strokeWidth={1.6}
-                      className="text-content-muted transition-all duration-micro group-hover:text-pink group-hover:-translate-y-px group-hover:scale-110"
-                      aria-hidden="true"
-                    />
-                  </div>
-                  <span className="eyebrow text-[11px] tabular-nums">
-                    {String(i + 1).padStart(2, '0')}
-                  </span>
-                </div>
+                {/* Number — small, monospace, no icon */}
+                <span className="col-span-2 eyebrow tabular-nums text-[11px] md:col-span-1">
+                  {String(i + 1).padStart(2, '0')}
+                </span>
 
                 {/* Title */}
-                <p className="mt-6 font-display text-[18px] font-medium leading-snug text-content-primary transition-colors duration-micro group-hover:text-pink xl:text-[20px]">
+                <h3 className="col-span-10 font-display text-[24px] font-medium leading-tight text-content-primary transition-colors duration-micro group-hover:text-pink md:col-span-5 md:text-[28px]">
                   {service.title}
-                </p>
+                </h3>
 
-                {/* Description */}
+                {/* Description — hidden on small screens, inline on desktop */}
                 {desc && (
-                  <p className="mt-2 text-caption leading-relaxed text-content-muted">
+                  <p className="col-span-10 col-start-3 text-body text-content-secondary md:col-span-6 md:col-start-auto">
                     {desc}
                   </p>
                 )}

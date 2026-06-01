@@ -89,7 +89,7 @@ export function SectorCards() {
         {/* Header */}
         <div className="sector-header mb-10 grid grid-cols-1 gap-8 md:grid-cols-12">
           <div className="md:col-span-3">
-            <Eyebrow rule data-reveal>04 · Three industries</Eyebrow>
+            <Eyebrow rule data-reveal>Industries</Eyebrow>
           </div>
           <div className="md:col-span-9">
             <h2 data-reveal className="max-w-readable font-display text-content-primary">

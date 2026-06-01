@@ -7,8 +7,8 @@ import { ServicesStrip } from '@/components/home/ServicesStrip'
 import { SectorCards } from '@/components/home/SectorCards'
 import { HowWeWork } from '@/components/home/HowWeWork'
 import { FounderTeaser } from '@/components/home/FounderTeaser'
-import { CapabilitiesMarquee } from '@/components/home/CapabilitiesMarquee'
-import { AIPipelineSequence } from '@/components/home/AIPipelineSequence'
+import { OurTech } from '@/components/home/OurTech'
+import { SelectedWorkMosaic } from '@/components/home/SelectedWorkMosaic'
 import { Testimonials } from '@/components/sector/Testimonials'
 import { Section } from '@/components/ui/Section'
 import { ScrollReveal } from '@/components/ui/ScrollReveal'
@@ -65,9 +65,6 @@ export default function HomePage() {
       {/* Client logo wall — 18 anchor brands */}
       <LogoWall />
 
-      {/* Capabilities marquee — infinite ticker between hero/logos and services */}
-      <CapabilitiesMarquee />
-
       {/* §4.4 Services */}
       <ServicesStrip />
 
@@ -106,33 +103,14 @@ export default function HomePage() {
       {/* §4.7 How we work */}
       <HowWeWork />
 
-      {/* AI Pipeline — scroll-scrubbed 4-stage transformation (dark zone) */}
-      <AIPipelineSequence />
+      {/* Our tech — simple narrative about AI approach + tools */}
+      <OurTech />
 
-      {/*
-        §4.6 Selected work mosaic — Dark Cinematic zone
-        TODO: build 6–9 piece grid with autoplay on hover + Vimeo lightbox
-      */}
-      <ScrollReveal y={24}>
-        <Section spacing="loose" surface="dark">
-          <Eyebrow rule className="!text-content-accent">05 · Selected work</Eyebrow>
-          <h2 className="mt-4 max-w-readable font-display text-content-primary">
-            Less noise. More signal.
-          </h2>
-          <p className="mt-4 max-w-readable text-lead text-content-secondary">
-            Selected pieces across sectors — autoplay on hover, click opens case study.
-            Video assets arriving shortly.
-          </p>
-          <div className="mt-10">
-            <Button variant="secondary" href="/portfolio">
-              Browse portfolio →
-            </Button>
-          </div>
-        </Section>
-      </ScrollReveal>
+      {/* §4.6 Selected work — full bleed cinematic mosaic */}
+      <SelectedWorkMosaic />
 
       {/* §4.8 Testimonials */}
-      <Testimonials eyebrow="07 · In their words" quotes={homeQuotes} />
+      <Testimonials eyebrow="In their words" quotes={homeQuotes} />
 
       {/* §4.9 Founder signal */}
       <FounderTeaser />
@@ -142,7 +120,7 @@ export default function HomePage() {
         <Section spacing="loose" surface="soft">
           <div className="grid grid-cols-1 gap-10 md:grid-cols-12">
             <div className="md:col-span-3">
-              <Eyebrow rule>08 · Talk to us</Eyebrow>
+              <Eyebrow rule>Talk to us</Eyebrow>
             </div>
             <div className="md:col-span-9">
               <h2 className="max-w-readable font-display text-content-primary">

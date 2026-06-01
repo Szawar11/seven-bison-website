@@ -102,17 +102,17 @@ export function Header() {
             : 'bg-canvas border-b border-hairline',
         ].join(' ')}
       >
-        <div className="container-site flex h-[72px] items-center justify-between">
+        <div className="container-site flex h-[80px] items-center justify-between md:h-[96px]">
 
-          {/* Logo — pełen lockup SVG (mark + wordmark) */}
+          {/* Logo — pełen lockup SVG (mark + wordmark) — większe na desktop */}
           <Link href="/" aria-label="Seven Bison — home" className="shrink-0">
             <Image
               src="/images/logos/seven-bison-logo-pink.svg"
               alt="Seven Bison"
-              width={160}
-              height={48}
+              width={220}
+              height={64}
               priority
-              style={{ height: '48px', width: 'auto' }}
+              className="h-12 w-auto md:h-16"
             />
           </Link>
 
@@ -207,7 +207,7 @@ export function Header() {
         aria-label="Mobile navigation"
         aria-hidden={!mobileOpen}
         className={[
-          'fixed inset-0 top-[72px] z-40 bg-canvas',
+          'fixed inset-0 top-[80px] z-40 bg-canvas md:top-[96px]',
           'flex flex-col overflow-y-auto',
           'transition-all duration-300 ease-brand md:hidden',
           mobileOpen

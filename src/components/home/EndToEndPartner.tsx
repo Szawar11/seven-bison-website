@@ -30,7 +30,7 @@ export function EndToEndPartner() {
     <Section spacing="default">
       <div ref={ref} className="grid grid-cols-1 gap-10 md:grid-cols-12">
         <div className="md:col-span-3">
-          <Eyebrow rule data-reveal>02 · End-to-end partner</Eyebrow>
+          <Eyebrow rule data-reveal>End-to-end partner</Eyebrow>
         </div>
         <div className="md:col-span-9">
           <h2

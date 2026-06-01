@@ -35,9 +35,10 @@
   --text-inverse:   #F7F5F2;             /* on filled-pink CTAs */
   --text-accent:    #E80787;             /* inline links, key highlights */
 
-  /* Layout */
-  --site-margin:    80px;
-  --site-max:       1440px;
+  /* Layout — full-bleed wide canvas (Buck/Tendril inspired) */
+  --site-margin:    48px;
+  --site-max:       100%;            /* full viewport width */
+  --site-max-prose: 1600px;          /* used by .container-prose for reading sections */
   --readable-max:   720px;
 
   /* Motion */
@@ -171,7 +172,7 @@
  * ───────────────────────────────────────────────────────────────────── */
 
 @layer components {
-  /* Site container — 1440 max, 80px desktop margins */
+  /* Site container — full bleed, 48px margins (24px on mobile) */
   .container-site {
     width: 100%;
     max-width: var(--site-max);
@@ -179,17 +180,30 @@
     padding-inline: var(--site-margin);
   }
 
+  /* Narrower container for prose-heavy sections (text-only) */
+  .container-prose {
+    width: 100%;
+    max-width: var(--site-max-prose);
+    margin-inline: auto;
+    padding-inline: var(--site-margin);
+  }
+
+  /* Edge-to-edge — for video grids, masonry, large hero panels */
+  .container-bleed {
+    width: 100%;
+    margin-inline: auto;
+    padding-inline: 0;
+  }
+
   @media (max-width: 1024px) {
-    .container-site {
-      padding-inline: 40px;
-    }
+    .container-site,
+    .container-prose { padding-inline: 32px; }
   }
 
   @media (max-width: 768px) {
-    :root { --site-margin: 24px; }
-    .container-site {
-      padding-inline: 24px;
-    }
+    :root { --site-margin: 20px; }
+    .container-site,
+    .container-prose { padding-inline: 20px; }
   }
 
   /*
