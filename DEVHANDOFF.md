@@ -1,144 +1,124 @@
 # Seven Bison — Dev Handoff
 
-**Data:** 2026-05-27
-**Wersja paczki:** v2.0 (final code-ready)
+**Wersja paczki:** v2.2 (Szymon feedback + media spec)
+**Data:** 2026-05-29
 **Domain:** sevenbison.com
 **Stack:** Next.js 15.5 · React 19 · TypeScript · Tailwind CSS 3 · GSAP 3.13
 **Repo:** https://github.com/Szawar11/seven-bison-website
 
 ---
 
-## ✅ Stan projektu — krótko
-
-Strona jest **production-ready od strony kodu**. Wszystkie strony, komponenty, animacje, SEO i a11y są skończone. Brakuje **tylko realnych materiałów** (Vimeo, zdjęcia, logo klientów, prawdziwe testimonials, Calendly URL). Wszystkie placeholdery wymieniane 1:1 — nie wymagają zmian kodowych.
+## ⚡ Szybki start
 
 ```bash
 npm install
-npm run dev    # http://localhost:3000
-npm run build  # production build
-npm run start  # production server
+npm run dev      # → http://localhost:3000
+npm run build    # production build
+npm run start    # production server
+npm run lint     # ESLint check
+npm run typecheck # TypeScript check
 ```
+
+**Wymagania:** Node.js 20+. Build trwa ~15s. Bundle: ~165 KB First Load JS dla strony głównej.
 
 ---
 
-## 📦 Co jest zrobione (kompletne)
+## 📍 Najważniejsze dokumenty w repo
 
-### Strony (`src/app/`)
-- `/` — Homepage (Hero, TrustStrip, EndToEndPartner, LogoWall, CapabilitiesMarquee, ServicesStrip, SectorCards, StudioAccessTeaser, HowWeWork, **AIPipelineSequence** (scroll-scrub), SelectedWork dark zone, Testimonials, FounderTeaser, Final CTA)
-- `/tech`, `/heavy-industry`, `/healthcare-pharma` — Sektory (SectorHero + PainPoints + SubsectorNav + SectorCaseGrid + Testimonials + CTA)
-- `/studio-access` — What's included, How it works, Customer story, Testimonials, CTA
-- `/portfolio` — Filterable grid (9 placeholder cases)
-- `/about` — Studio, Founder + foto placeholder, Team (3 placeholder cards)
-- `/contact` — Calendly + email
-- `/not-found.tsx` — Własny 404 ("This page hit the cutting room floor.")
-- `/error.tsx` — Graceful error boundary z retry
-- `/loading.tsx` — Skeleton loader
-
-### Design system
-- Tokeny CSS — light corporate + dark cinematic (`.dark-zone` scope)
-- Typography: Raleway display + Inter body, font-variation `swap`
-- Tailwind tokens 1:1 z CSS vars (`tailwind.config.mjs`)
-- Grain overlay sitewide (SVG turbulence noise, 5.5% opacity)
-- Reading progress bar (native CSS scroll-timeline)
-
-### Komponenty UI
-- `Button` (5 variants + magnetic attribute na primary/secondary)
-- `Section` (spacing: tight/default/loose, surface: canvas/soft/dark)
-- `Eyebrow` (z optional `rule` prop = hairline rozciąga się na prawo)
-- `ScrollReveal` (re-usable wrapper z GSAP scroll-trigger)
-- `AnimatedPlaceholder` (4 warianty SVG: reel / tech / heavy / healthcare)
-- `CustomCursor` (brand-pink dot, magnetic pull na CTA, morfuje nad video tilami)
-- `CountUp` (ratings/stats animują od 0 z ease-out cubic na IntersectionObserver)
-- `BeforeAfterSlider` (drag/keyboard, ARIA slider — gotowy do case studies)
-
-### Animacje 2026
-- Hero — kinetic line-reveal headline (clip-mask + GSAP expo.out)
-- Hero — scroll parallax na prawej kolumnie reel
-- SectorCards — 2.5D mouse-tracking tilt (perspective + rotateX/Y)
-- ServicesStrip — stagger reveal z grid algorithm
-- CapabilitiesMarquee — CSS-only infinite ticker (pauza on hover)
-- AIPipelineSequence — pinned scroll-scrub przez 4 etapy (Brief → Storyboard → AI gen → Delivery)
-- View Transitions API — page-to-page cross-fade
-- All sections — ScrollReveal z entrance animacjami
-
-### SEO + Performance + A11y
-- `sitemap.xml` (auto, 8 URL-i)
-- `robots.txt` (allow all, disallow /api/, /_next/)
-- Dynamic OG image (`/opengraph-image` — 1200×630 generowane edge runtime)
-- JSON-LD Organization schema z `contactPoint` i `sameAs`
-- `<Image>` z `next/image` na logo (priority + auto AVIF)
-- Mobile menu: focus trap, body scroll lock, Escape close, role="dialog" + aria-modal
-- `prefers-reduced-motion` — wszystkie animacje wyłączone gdy user preferuje
-- `:focus-visible` outline na każdym interaktywnym elemencie
-- Semantic HTML wszędzie (`<section>`, `<nav>`, `<main id="main">`, ARIA labels)
+| Plik | Co tam jest |
+|---|---|
+| **`MEDIA-SPEC.md`** | **Pełna specyfikacja wszystkich materiałów** które dostarczy Szymon — formaty, rozmiary, ścieżki, Vimeo vs upload. **Czytać jako pierwsze.** |
+| `DEVHANDOFF.md` | Ten plik — status projektu, what's done, deploy |
+| `DESIGN.master.md` | Pełen design system (kolory, typografia, spacing, motion) |
+| `BRAND.md` | Brand statement i ton komunikacji |
+| `INSTALL.md` | Instalacja środowiska |
+| `README.md` | Krótkie intro |
 
 ---
 
-## 🤝 Co czeka na materiały (NIE wymaga pracy programisty)
+## ✅ Stan projektu
 
-Wszystko poniżej to **podmiana 1:1** — placeholder już jest w kodzie z odpowiednim layoutem.
+Strona jest **production-ready od strony kodu**. Build kompiluje się czysto. Wszystkie strony, komponenty, animacje, SEO i a11y są skończone. Wszystkie placeholdery są **spec-aware** — pokazują dokładnie jakie materiały muszą wskoczyć w które miejsca.
 
-### 1. Calendly URL
-Plik: `src/lib/config.ts:18`
-```ts
-calendly: 'https://calendly.com/seven-bison/intro',  // ← podmienić
-```
+### Architektura zrobiona w 100%
+- 8 routes (/, /tech, /heavy-industry, /healthcare-pharma, /studio-access, /portfolio, /about, /contact)
+- Hero z video panel + modal showreel
+- Strony sektorowe z tą samą architekturą Hero
+- Full-bleed mosaic dla Selected Work + Portfolio
+- Footer i Header z mobile a11y (focus trap, escape, scroll lock)
+- SEO foundations (sitemap, robots, dynamic OG image, JSON-LD Organization)
+- A11y (reduced-motion, focus-visible, semantic HTML, ARIA)
+- View Transitions API + grain overlay + reading progress + magnetic cursor
 
-### 2. Vimeo URL dla Hero reel
-Plik: `src/app/page.tsx`
-```tsx
-<Hero vimeoUrl="https://player.vimeo.com/video/TWOJ_VIMEO_ID" />
-```
-
-### 3. Zdjęcie Szymonka (4:5 portret)
-Wrzuć plik: `public/images/founder.jpg`
-Potem podmień w 2 miejscach:
-- `src/components/home/FounderTeaser.tsx:73-88` — usuń `<svg>` + `<p>` placeholder, dodaj:
-  ```tsx
-  <Image src="/images/founder.jpg" alt="Szymon Wojewski" fill className="object-cover" />
-  ```
-- `src/app/about/page.tsx:80-95` — to samo
-
-### 4. Loga klientów (18 brandów, SVG monochrome)
-Wrzuć pliki do: `public/images/logos/clients/`
-- `aramco.svg`, `hilti.svg`, `roche.svg`, `bayer.svg`, `pfizer.svg`, `daikin.svg`, `aws.svg`, `outpost24.svg`, `alacriti.svg`, `santen.svg`, `sherwin-williams.svg`, `r3.svg`, `tf-kable.svg`, `harris-health.svg`, `bt.svg`, `kpmg.svg`, `paramount.svg`, `mtv.svg`
-
-Potem w `src/components/home/LogoWall.tsx` i `TrustStrip.tsx` zamień text na `<Image>`.
-
-### 5. Postery sektorowe / case studies
-Wrzuć do `public/videos/`:
-- Hero reel poster: `reel-poster.jpg` (1920×1080)
-- Sector posters: `sector-tech-poster.jpg`, `sector-heavy-poster.jpg`, `sector-healthcare-poster.jpg`
-- Case study posters (1280×960): `case-outpost24-poster.jpg`, `case-alacriti-poster.jpg`, `case-aws-poster.jpg`, `case-aramco-poster.jpg`, `case-hilti-poster.jpg`, `case-tfkable-poster.jpg`, `case-roche-poster.jpg`, `case-bayer-poster.jpg`, `case-santen-poster.jpg`
-
-Ścieżki są **już wpisane** w kodzie — pliki same się załadują, placeholdery automatycznie znikną pod nimi.
-
-### 6. Real testimonials (4 cytaty)
-Plik: `src/app/page.tsx:24-49` — zamień `Placeholder Name`, `Head of Brand` itp. na realne dane.
-Dodatkowo w każdej stronie sektorowej (`tech`, `heavy-industry`, `healthcare-pharma`) — tablica `const quotes` na początku pliku.
-
-### 7. Case study pages (gdy będą gotowe)
-Obecnie wszystkie linki z kart sektorowych prowadzą na `/portfolio`.
-Gdy powstaną osobne case study pages (np. `/portfolio/outpost24`), zmień w tablicach `cases` w `tech/page.tsx`, `heavy-industry/page.tsx`, `healthcare-pharma/page.tsx`:
-```ts
-href: '/portfolio'  →  href: '/portfolio/outpost24'
-```
+### Co czeka na materiały
+Wszystko opisane w **`MEDIA-SPEC.md`**. Krótko:
+- Hero teaser MP4 + Vimeo showreel URL
+- 3 sektorowe teaser MP4 + Vimeo URL
+- ~25 work posterów JPG + opcjonalne loop MP4
+- 18 SVG logotypów klientów
+- Foto Szymonka + 3 zdjęcia team
+- Realne Calendly URL + testimonial attribution
 
 ---
 
-## 🗂️ Struktura plików — szybki cheatsheet
+## 📦 Co zostało wdrożone na podstawie feedbacku Szymonka
+
+Z feedbacku (2026-05-29) wdrożono **27/30 punktów** (90%). Pełny audyt w repo (`workflows/`).
+
+### P0 — Krytyczne ✅ wszystko done
+- Section numbers usunięte ze wszystkich Eyebrows
+- Logo Seven Bison powiększony (64px desktop, header 96px)
+- Pełna szerokość strony (`--site-max: 100%`)
+- Hero: central looped autoplay muted video + headline + CTA NA video
+- Klik w video → modal z pełnym showreelem (Escape close, scroll lock)
+
+### P1 — Sekcje ✅ wszystko done (oprócz blocked)
+- Services jako editorial list bez ikon (CapabilitiesMarquee usunięty)
+- AI section: `OurTech.tsx` (narrative, nie pipeline) — AIPipelineSequence usunięty z importów
+- Studio Access section z dwoma CTA
+- Testimonials, Footer, Founder Block na home
+- Sector pages: ten sam Hero pattern co home
+- 🔴 **3.1 Logo klientów jako SVG** — blocked, czeka na 18 plików
+
+### P2 — Polish ✅ wszystko done (oprócz partial)
+- Ikon brak na sector cards (tylko ArrowRight w CTA)
+- Sector cards z dark cinematic thumbs (czarne tło, pink animations)
+- Selected Work jako mixed-span mosaic (big/wide/tall/square) — 9 prac
+- Portfolio jako pełna mosaic — 12 prac (huge/big/wide/tall/square)
+- Reveal animations (GSAP ScrollTrigger stagger)
+- 🟡 **9.3 SectorCaseGrid jako mosaic** — partial (wciąż 3-col grid, nie mixed-span — można dopracować po dostawie posterów)
+
+---
+
+## 🎬 Wzorce dostarczania materiałów
+
+### Vimeo vs bezpośredni upload — kiedy co
+
+| Co | Skąd | Przykład |
+|---|---|---|
+| **Krótkie loopy 5-15s** (Hero teaser, mosaic tiles) | Upload do `/public/videos/` | `teaserSrc="/videos/hero-teaser.mp4"` |
+| **Pełny showreel 60-180s** | Vimeo URL embed | `showreelVimeoUrl="https://player.vimeo.com/video/123456"` |
+| **Case study videos** | Vimeo URL embed | `videoLoop="https://player.vimeo.com/video/..."` lub direct mp4 |
+
+**Czemu tak?** Loopy upload = brak Vimeo brandingu, inline mobile autoplay, mała waga (~3-6 MB). Showreele Vimeo = quality switching, bandwidth optimization, player controls.
+
+**Pełne wymiary, ścieżki, formaty:** patrz `MEDIA-SPEC.md`.
+
+---
+
+## 🗂️ Mapa plików — szybki cheatsheet
 
 ```
 src/
-├── app/                        # Routing (Next.js App Router)
-│   ├── layout.tsx              # Root layout, JSON-LD, cursor, grain
-│   ├── page.tsx                # Homepage
-│   ├── not-found.tsx           # 404
-│   ├── error.tsx               # Error boundary
-│   ├── loading.tsx             # Loading skeleton
-│   ├── opengraph-image.tsx     # Dynamic OG image (edge runtime)
-│   ├── sitemap.ts              # sitemap.xml generator
-│   ├── robots.ts               # robots.txt generator
+├── app/
+│   ├── layout.tsx                    # Root layout — JSON-LD, cursor, grain, header, footer
+│   ├── page.tsx                      # Homepage
+│   ├── not-found.tsx                 # 404
+│   ├── error.tsx                     # Error boundary
+│   ├── loading.tsx                   # Skeleton loader
+│   ├── opengraph-image.tsx           # Dynamic 1200×630 OG (edge runtime)
+│   ├── sitemap.ts                    # sitemap.xml generator
+│   ├── robots.ts                     # robots.txt
 │   ├── tech/page.tsx
 │   ├── heavy-industry/page.tsx
 │   ├── healthcare-pharma/page.tsx
@@ -149,68 +129,72 @@ src/
 │
 ├── components/
 │   ├── layout/
-│   │   ├── Header.tsx          # Sticky nav + mobile drawer (a11y)
+│   │   ├── Header.tsx                # Sticky nav + mobile drawer + focus trap
 │   │   └── Footer.tsx
-│   ├── home/                   # Homepage sections
-│   │   ├── Hero.tsx            # Split-frame + line-reveal headline
-│   │   ├── TrustStrip.tsx      # Ratings z CountUp
-│   │   ├── LogoWall.tsx        # 18 brands
-│   │   ├── CapabilitiesMarquee.tsx
+│   ├── home/
+│   │   ├── Hero.tsx                  # Full-width video panel + overlay + modal
+│   │   ├── TrustStrip.tsx            # Ratings z CountUp + 5 logo placeholders
+│   │   ├── LogoWall.tsx              # 18 dashed logo boxes
 │   │   ├── EndToEndPartner.tsx
-│   │   ├── ServicesStrip.tsx   # 8 dyscyplin
-│   │   ├── SectorCards.tsx     # 2.5D tilt + dark cinematic thumbs
+│   │   ├── ServicesStrip.tsx         # Editorial list bez ikon
+│   │   ├── SectorCards.tsx           # 3 cinematic dark thumbs + 2.5D tilt
 │   │   ├── HowWeWork.tsx
-│   │   ├── AIPipelineSequence.tsx  # Scroll-scrub pin section
+│   │   ├── OurTech.tsx               # NEW — narrative AI approach
+│   │   ├── SelectedWorkMosaic.tsx    # NEW — 9-tile full-bleed mosaic
 │   │   └── FounderTeaser.tsx
-│   ├── sector/                 # Used by /tech, /heavy-industry, /healthcare-pharma
-│   │   ├── SectorHero.tsx
+│   ├── sector/                       # Used by /tech, /heavy-industry, /healthcare-pharma
+│   │   ├── SectorHero.tsx            # Same architecture as homepage Hero
 │   │   ├── PainPoints.tsx
 │   │   ├── SubsectorNav.tsx
 │   │   ├── SectorCaseGrid.tsx
 │   │   └── Testimonials.tsx
-│   └── ui/                     # Re-usable building blocks
-│       ├── Button.tsx
-│       ├── Section.tsx
-│       ├── Eyebrow.tsx
+│   ├── portfolio/
+│   │   └── PortfolioMosaic.tsx       # NEW — 12-tile full-bleed mosaic
+│   └── ui/
+│       ├── Button.tsx                # 5 variants + magnetic
+│       ├── Section.tsx               # tight/default/loose + canvas/soft/dark
+│       ├── Eyebrow.tsx               # Z opcjonalnym `rule` prop (hairline rule)
 │       ├── ScrollReveal.tsx
-│       ├── AnimatedPlaceholder.tsx
-│       ├── CustomCursor.tsx
+│       ├── AnimatedPlaceholder.tsx   # SVG SMIL — reel/tech/heavy/healthcare
+│       ├── MediaPlaceholder.tsx      # NEW — spec-aware placeholder z dim/format/hint
+│       ├── VideoModal.tsx            # NEW — fullscreen showreel modal
+│       ├── CustomCursor.tsx          # Brand-pink magnetic cursor
 │       ├── CountUp.tsx
 │       └── BeforeAfterSlider.tsx
 │
 ├── lib/
-│   ├── config.ts               # Single source of truth (site, nav, sectors, services, contact)
-│   └── gsap.ts                 # GSAP plugin registration
+│   ├── config.ts                     # SINGLE SOURCE OF TRUTH — site, nav, sectors, services, contact
+│   └── gsap.ts                       # GSAP plugin registration
 │
 └── styles/
-    └── global.css              # Design tokens + utilities + 2026 enhancements
+    └── global.css                    # Design tokens + 2026 enhancements (grain, scroll-progress, cursor, marquee, view-transitions)
 ```
 
 ---
 
 ## 🎨 Design tokens — cheatsheet
 
-| Tailwind class | Resolves to |
-|---|---|
-| `bg-canvas` | `#F7F5F2` (light) / `#000` (dark-zone) |
-| `bg-canvas-soft` | `#F2F0ED` (light) / `#111` (dark) |
-| `bg-canvas-muted` | `#E8E8E8` (light) / `#1A1A1A` (dark) |
-| `text-content-primary` | `#111111` / `#FFFFFF` |
-| `text-content-secondary` | `#2A2A2A` / `rgba(255,255,255,0.85)` |
-| `text-content-muted` | `#6F6F6F` / `#B8B8B8` |
-| `text-pink` | `#E80787` (brand pink) |
+| Tailwind class | Light mode | Dark mode (`.dark-zone`) |
+|---|---|---|
+| `bg-canvas` | `#F7F5F2` (warm off-white) | `#000` |
+| `bg-canvas-soft` | `#F2F0ED` | `#111` |
+| `bg-canvas-muted` | `#E8E8E8` | `#1A1A1A` |
+| `text-content-primary` | `#111111` | `#FFFFFF` |
+| `text-content-secondary` | `#2A2A2A` | `rgba(255,255,255,0.85)` |
+| `text-content-muted` | `#6F6F6F` | `#B8B8B8` |
+| `text-pink` | `#E80787` (brand) | `#E80787` |
 | `border-hairline` | 1px subtelna linia |
 | `font-display` | Raleway (h1-h4) |
 | `font-body` | Inter (body, captions) |
 | `.eyebrow` | Mały uppercase różowy label |
-| `.container-site` | Max 1440px, padding 80px/40px/24px responsive |
+| `.container-site` | Full width, padding 48px/32px/20px responsive |
 | `.dark-zone` | Klasa na rodzicu — przełącza wszystkie tokeny na ciemne |
 
 ---
 
-## 🎬 Custom cursor + magnetic — jak dodawać interakcje
+## 🎬 Custom cursor + magnetic — interakcje
 
-**Magnetic pull** (button się przyciąga do kursora):
+**Magnetic pull** (button przyciąga się do kursora):
 ```tsx
 <button data-magnetic>Click me</button>
 ```
@@ -220,67 +204,139 @@ Wszystkie `<Button variant="primary"|"secondary">` mają to automatycznie.
 ```tsx
 <div data-cursor="play">...</div>
 ```
-Już zastosowane na sector card thumbnails i BeforeAfterSlider.
+Już zastosowane na sector card thumbnails, video tiles, hero panel.
 
 ---
 
 ## 🚀 Deploy
 
 ### Vercel (rekomendowane)
-```bash
-# Połącz repo GitHub z Vercel — auto deploy z main branch.
-# Edge runtime dla OG image działa out-of-the-box.
-```
+1. Połącz repo GitHub z Vercel
+2. Auto deploy z `main` branch
+3. Edge runtime dla OG image działa out-of-the-box
+4. Dodaj custom domain `sevenbison.com`
 
-### Inne (Netlify, Cloudflare Pages, AWS Amplify)
-- Build command: `npm run build`
-- Output directory: `.next/`
-- Node version: 20+ (Next.js 15 wymaga)
-
-### Self-hosted (Docker / VPS)
-```bash
-npm run build
-npm run start  # nasłuchuje na PORT z env (default 3000)
-```
+### Inne hostingi
+- **Netlify / Cloudflare Pages / AWS Amplify** — `npm run build`, output `.next/`, Node 20+
+- **Self-hosted / VPS** — `npm run build` → `npm run start` (PORT env var)
 
 ### Static export (jeśli klient nie chce SSR)
 Odkomentuj w `next.config.ts`:
 ```ts
 output: 'export',
 ```
-Potem `npm run build` wyprodukuje `out/` do uploadu na zwykły hosting.
-**Uwaga:** static export wyłącza dynamic OG image — trzeba wtedy ręcznie podać URL do `public/images/og.jpg`.
+**Uwaga:** static export wyłącza dynamic OG image — wtedy trzeba ręcznie podać `og:image` jako URL do `public/images/og.jpg`.
 
 ---
 
-## 📜 Wymagania środowiska
+## 🧪 Production build snapshot
 
-- Node.js **20+** (Next.js 15)
-- npm 10+ (lub pnpm / yarn — działa wszystko)
-- Git
-- Modern browser do dev (Chrome 111+, Safari 18+, Firefox 130+ dla View Transitions / scroll-timeline)
+```
+Route (app)                                 Size  First Load JS
+┌ ○ /                                    7.89 kB         165 kB
+├ ○ /_not-found                            136 B         103 kB
+├ ○ /about                                 172 B         107 kB
+├ ○ /contact                               172 B         107 kB
+├ ○ /healthcare-pharma                     134 B         160 kB
+├ ○ /heavy-industry                        134 B         160 kB
+├ ƒ /opengraph-image                       136 B         103 kB
+├ ○ /portfolio                           2.84 kB         154 kB
+├ ○ /robots.txt                            136 B         103 kB
+├ ○ /sitemap.xml                           136 B         103 kB
+├ ○ /studio-access                       1.31 kB         153 kB
+└ ○ /tech                                  135 B         160 kB
++ First Load JS shared by all             102 kB
+```
+
+Wszystkie strony statycznie prerenderowane (Static). Tylko OG image jest dynamic (edge runtime). Bardzo szybkie ładowanie — bundle pod 165 KB.
+
+---
+
+## 📝 Checklist dla dewa — kolejność prac
+
+### Etap 1 — Setup (Day 1)
+- [ ] `git clone https://github.com/Szawar11/seven-bison-website.git`
+- [ ] `npm install` — sprawdź czy bez errorów
+- [ ] `npm run dev` — sanity check, otwórz localhost:3000
+- [ ] Przeczytaj **`MEDIA-SPEC.md`** w całości
+- [ ] Skonfiguruj Vercel preview z brancha `main`
+
+### Etap 2 — Wpinanie materiałów (gdy Szymon dostarczy)
+
+Każdy z poniższych punktów to **podmiana 1:1** — placeholdery są spec-aware i pokazują dokładnie co tam wskoczy.
+
+#### A. Konfiguracja
+- [ ] `src/lib/config.ts:18` — Calendly URL
+- [ ] `src/lib/config.ts:19` — email (jeśli ma się zmienić)
+- [ ] `src/app/page.tsx:26-51` — 4 testimonial quotes (Outpost24, Hilti, Roche, Bayer)
+- [ ] Testimonials na stronach sektorowych — tablice `const quotes` w `tech/`, `heavy-industry/`, `healthcare-pharma/`
+
+#### B. Hero video (homepage + 3 sektory)
+- [ ] Wrzucić `public/videos/hero-teaser.mp4` (21:9, 5-15s loop)
+- [ ] Wrzucić `public/videos/hero-teaser-poster.jpg`
+- [ ] W `src/app/page.tsx` dodać propsy:
+  ```tsx
+  <Hero
+    teaserSrc="/videos/hero-teaser.mp4"
+    posterUrl="/videos/hero-teaser-poster.jpg"
+    showreelVimeoUrl="https://player.vimeo.com/video/123456"
+  />
+  ```
+- [ ] To samo dla `src/app/tech/page.tsx`, `heavy-industry/page.tsx`, `healthcare-pharma/page.tsx` — propsy `teaserSrc + posterUrl + showreelVimeoUrl` w komponencie `<SectorHero>`
+
+#### C. Logotypy klientów (18 SVG)
+- [ ] Wrzucić wszystkie 18 plików do `public/images/logos/clients/` (lista w `MEDIA-SPEC.md`)
+- [ ] W `src/components/home/LogoWall.tsx` zamienić `<span>` na `<Image>`:
+  ```tsx
+  <Image
+    src={`/images/logos/clients/${slug}.svg`}
+    alt={name}
+    width={120}
+    height={40}
+    className="object-contain opacity-50 hover:opacity-80 transition-opacity"
+  />
+  ```
+- [ ] To samo w `TrustStrip.tsx`
+
+#### D. Posters case studies + work
+- [ ] Wrzucić ~25 plików JPG (lista w `MEDIA-SPEC.md`)
+- [ ] Ścieżki są **już wpisane w kodzie** w `SelectedWorkMosaic.tsx`, `PortfolioMosaic.tsx`, `SectorCaseGrid.tsx` — pliki same się załadują, placeholdery znikną
+
+#### E. Founder + team
+- [ ] `public/images/founder.jpg` (4:5 · 1600×2000)
+- [ ] `public/images/team/team-1.jpg`, `team-2.jpg`, `team-3.jpg` (1:1)
+- [ ] W `FounderTeaser.tsx` i `about/page.tsx` zamienić `<MediaPlaceholder>` na `<Image>`
+
+### Etap 3 — QA + Deploy
+- [ ] Sprawdzić w mobile (320px-768px), tablet (768-1024), desktop (1024-1920+)
+- [ ] Przetestować flow: Hero click → modal → escape close
+- [ ] Sprawdzić cursor magnetic na buttonach (desktop)
+- [ ] Lighthouse audit — target ≥ 95 we wszystkich kategoriach
+- [ ] Deploy na produkcję `sevenbison.com`
 
 ---
 
 ## 🔗 Linki
 
 - **Repo:** https://github.com/Szawar11/seven-bison-website
-- **Produkcja (po deploy):** https://sevenbison.com
-- **Vercel preview:** *(do skonfigurowania)*
+- **Domain (po deploy):** https://sevenbison.com
+- **Design refs:** Buck.co, Tendril.ca
 
 ---
 
-## 📋 Changelog (ostatnie commity)
+## 📜 Historia zmian
 
 | Commit | Co |
 |---|---|
+| `f6ef6e6` | Spec-aware media placeholders + MEDIA-SPEC.md (formats, sizes, Vimeo guidance) |
+| `8f58f92` | Szymon feedback v1: full-bleed layout, video hero, no section numbers, larger logo, Selected Work + Portfolio mosaic, Our Tech section |
 | `b69e0a0` | SEO + a11y foundations: sitemap, robots, OG image, JSON-LD, 404/error/loading, mobile menu a11y, next/image |
 | `6d96b0b` | Cinematic sector thumbs (czarne tło) + solid brand-pink cursor z glow |
-| `768484c` | 2026 trends: grain, marquee, line-reveal hero, count-up, AI pipeline scroll-scrub, view transitions, before/after slider |
+| `768484c` | 2026 trends: grain, marquee, line-reveal hero, count-up, view transitions, before/after slider |
 | `72632cd` | Media placeholders: case study cards, about founder photo, team cards, portfolio grid |
 | `8a6473e` | Fix: redirect broken case study links to /portfolio |
-| `97d25b8` | Initial commit — Seven Bison website |
+| `97d25b8` | Initial commit |
 
 ---
 
-*DEVHANDOFF.md — Seven Bison v2.0 · 2026-05-27*
+*DEVHANDOFF.md — Seven Bison v2.2 · 2026-05-29*
