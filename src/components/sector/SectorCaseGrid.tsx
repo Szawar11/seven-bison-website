@@ -6,6 +6,7 @@ import { useGSAP } from '@gsap/react'
 import { gsap, ScrollTrigger } from '@/lib/gsap'
 import { Section } from '@/components/ui/Section'
 import { Eyebrow } from '@/components/ui/Eyebrow'
+import { MediaPlaceholder } from '@/components/ui/MediaPlaceholder'
 
 export interface CaseStudy {
   brand: string
@@ -77,17 +78,14 @@ export function SectorCaseGrid({ eyebrow = 'Selected work', heading, cases }: Pr
               >
                 {/* Poster */}
                 <div className="relative aspect-card w-full overflow-hidden bg-canvas-muted">
-                  {/* Generic video placeholder — remove once real poster exists */}
-                  <div className="absolute inset-0 flex flex-col items-center justify-center gap-2 bg-canvas-muted">
-                    <svg viewBox="0 0 80 60" className="w-16 opacity-20" fill="none" aria-hidden="true">
-                      <rect x="0.5" y="0.5" width="79" height="59" stroke="currentColor" strokeDasharray="5 3"/>
-                      <line x1="0" y1="30" x2="80" y2="30" stroke="currentColor" strokeWidth="0.5"/>
-                      <line x1="40" y1="0" x2="40" y2="60" stroke="currentColor" strokeWidth="0.5"/>
-                      <circle cx="40" cy="30" r="11" stroke="#E80787" strokeWidth="1.2" fill="none"/>
-                      <polygon points="37,25.5 37,34.5 46,30" fill="#E80787" opacity="0.5"/>
-                    </svg>
-                    <p className="text-[10px] text-content-disabled tracking-wide uppercase">Video coming soon</p>
-                  </div>
+                  {/* Spec placeholder until real poster lands */}
+                  <MediaPlaceholder
+                    kind="video-poster"
+                    spec="4:3 · 1280×960"
+                    format="JPG poster + optional MP4 loop"
+                    hint={c.brand}
+                    size="md"
+                  />
                   {c.poster && (
                     <div
                       className="absolute inset-0 bg-cover bg-center transition-transform duration-500 ease-brand group-hover:scale-[1.03]"

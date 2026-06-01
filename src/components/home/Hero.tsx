@@ -7,6 +7,7 @@ import { gsap, ScrollTrigger } from '@/lib/gsap'
 import { sectors, contact } from '@/lib/config'
 import { Button } from '@/components/ui/Button'
 import { AnimatedPlaceholder } from '@/components/ui/AnimatedPlaceholder'
+import { MediaPlaceholder } from '@/components/ui/MediaPlaceholder'
 import { VideoModal } from '@/components/ui/VideoModal'
 
 interface Props {
@@ -129,6 +130,20 @@ export function Hero({
                     aria-label="Seven Bison showreel preview"
                   />
                 )}
+                {/* Floating spec card — only visible until real teaser is wired in */}
+                <div className="absolute top-1/2 left-1/2 z-[5] -translate-x-1/2 -translate-y-1/2 border border-white/15 bg-black/55 px-5 py-4 backdrop-blur-sm">
+                  <MediaPlaceholder
+                    kind="showreel"
+                    spec="21:9 · 1920×823 (recommended)"
+                    format="Teaser MP4 H.264 · upload to /public/videos/"
+                    hint="5–15s · muted · loop · ≤ 6 MB"
+                    size="md"
+                    dark
+                  />
+                  <p className="mt-3 text-center text-[10px] uppercase tracking-[0.18em] text-white/60 font-mono">
+                    + full Vimeo URL for modal showreel
+                  </p>
+                </div>
               </>
             )}
           </div>

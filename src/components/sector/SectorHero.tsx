@@ -6,6 +6,7 @@ import { gsap } from '@/lib/gsap'
 import { Button } from '@/components/ui/Button'
 import { contact } from '@/lib/config'
 import { AnimatedPlaceholder, PlaceholderVariant } from '@/components/ui/AnimatedPlaceholder'
+import { MediaPlaceholder } from '@/components/ui/MediaPlaceholder'
 import { VideoModal } from '@/components/ui/VideoModal'
 
 interface Props {
@@ -105,6 +106,17 @@ export function SectorHero({
                     aria-label={`${sector} sector reel`}
                   />
                 )}
+                {/* Spec card — disappears once teaserSrc/showreel props provided */}
+                <div className="absolute top-1/2 left-1/2 z-[5] -translate-x-1/2 -translate-y-1/2 border border-white/15 bg-black/55 px-5 py-4 backdrop-blur-sm">
+                  <MediaPlaceholder
+                    kind="showreel"
+                    spec="21:9 · 1920×823 (recommended)"
+                    format={`${sector} teaser MP4 · upload`}
+                    hint="5–15s · muted · loop · ≤ 6 MB"
+                    size="md"
+                    dark
+                  />
+                </div>
               </>
             )}
           </div>

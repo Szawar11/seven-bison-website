@@ -4,6 +4,7 @@ import { useRef } from 'react'
 import Link from 'next/link'
 import { useGSAP } from '@gsap/react'
 import { gsap, ScrollTrigger } from '@/lib/gsap'
+import { MediaPlaceholder } from '@/components/ui/MediaPlaceholder'
 
 /**
  * PortfolioMosaic — full-bleed dark cinematic mosaic.
@@ -46,6 +47,16 @@ const spanClasses: Record<Span, string> = {
   wide:   'col-span-12 md:col-span-8 aspect-[16/9]',
   tall:   'col-span-12 md:col-span-4 aspect-[3/4]',
   square: 'col-span-12 sm:col-span-6 md:col-span-4 aspect-square',
+}
+
+function specBySpanPortfolio(span: Span): string {
+  switch (span) {
+    case 'huge':   return '21:9 · 2560×1097'
+    case 'big':    return '16:9 · 1920×1080'
+    case 'wide':   return '16:9 · 1920×1080'
+    case 'tall':   return '3:4 · 1080×1440'
+    case 'square': return '1:1 · 1080×1080'
+  }
 }
 
 export function PortfolioMosaic() {
@@ -118,15 +129,15 @@ export function PortfolioMosaic() {
                     aria-label={`${work.brand} — ${work.title}`}
                   />
                 ) : (
-                  <div className="absolute inset-0 flex flex-col items-center justify-center gap-3 bg-canvas-muted">
-                    <svg viewBox="0 0 80 60" className="w-16 opacity-40" fill="none" aria-hidden="true">
-                      <rect x="0.5" y="0.5" width="79" height="59" stroke="rgba(255,255,255,0.18)" strokeDasharray="4 3"/>
-                      <circle cx="40" cy="30" r="12" stroke="#E80787" strokeWidth="1.2" fill="none"/>
-                      <polygon points="37,25 37,35 47,30" fill="#E80787" opacity="0.7"/>
-                    </svg>
-                    <span className="text-[10px] uppercase tracking-wider text-content-disabled">
-                      Video coming soon
-                    </span>
+                  <div className="absolute inset-0 bg-canvas-muted">
+                    <MediaPlaceholder
+                      kind="video-loop"
+                      spec={specBySpanPortfolio(work.span)}
+                      format="MP4 H.264 · upload"
+                      hint="5–15s · muted · loop"
+                      size="md"
+                      dark
+                    />
                   </div>
                 )}
 

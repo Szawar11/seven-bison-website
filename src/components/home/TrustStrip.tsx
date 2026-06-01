@@ -76,14 +76,17 @@ export function TrustStrip({
             </span>
           </div>
 
-          {/* Client name placeholders — replace with <Image> tags when SVGs are ready */}
-          <ul className="flex items-center gap-7">
+          {/* Client name placeholders — boxes show where SVG logos will sit (~100×32) */}
+          <ul className="flex items-center gap-3">
             {logos.map((name) => (
               <li
                 key={name}
-                className="trust-logo font-display text-h4 font-semibold uppercase tracking-label text-content-primary opacity-40 transition-opacity duration-micro hover:opacity-70"
+                className="trust-logo flex h-8 w-[100px] items-center justify-center border border-dashed border-hairline bg-canvas-soft px-2 transition-colors duration-micro hover:border-pink/40"
+                title="Replace with <Image> when SVG logo arrives — ~100×32"
               >
-                {name}
+                <span className="font-display text-[10px] font-semibold uppercase tracking-label text-content-disabled select-none">
+                  {name}
+                </span>
               </li>
             ))}
           </ul>

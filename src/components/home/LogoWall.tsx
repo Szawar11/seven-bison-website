@@ -38,21 +38,26 @@ export function LogoWall() {
   )
 
   return (
-    <section ref={ref} className="border-b border-hairline bg-canvas py-10">
+    <section ref={ref} className="border-b border-hairline bg-canvas py-12">
       <div className="container-site">
-        <p className="eyebrow mb-7 text-center">Trusted by</p>
-        <ul className="grid grid-cols-3 gap-x-6 gap-y-5 sm:grid-cols-4 md:grid-cols-6 lg:grid-cols-9">
+        <div className="mb-8 flex items-baseline justify-between">
+          <p className="eyebrow">Trusted by</p>
+          <p className="text-[10px] font-mono uppercase tracking-[0.18em] text-content-disabled">
+            18 logos · SVG · monochrome · ~120×40
+          </p>
+        </div>
+        <ul className="grid grid-cols-3 gap-3 sm:grid-cols-4 md:grid-cols-6 lg:grid-cols-9">
           {brands.map((name) => (
             <li
               key={name}
-              className="logo-item flex items-center justify-center"
+              className="logo-item flex aspect-[3/1] items-center justify-center border border-dashed border-hairline bg-canvas-soft px-2 transition-colors duration-micro hover:border-pink/40"
             >
               {/*
-               * TODO: replace this <span> with:
+               * Placeholder box — replace whole <li> contents with:
                * <Image src={`/images/logos/clients/${slug}.svg`} alt={name}
-               *        width={96} height={32} className="object-contain opacity-35 hover:opacity-60 transition-opacity" />
+               *        width={120} height={40} className="object-contain opacity-50 hover:opacity-80 transition-opacity" />
                */}
-              <span className="font-display text-[11px] font-semibold uppercase tracking-label text-content-primary opacity-35 transition-opacity duration-micro hover:opacity-65 select-none">
+              <span className="font-display text-[11px] font-semibold uppercase tracking-label text-content-disabled select-none text-center">
                 {name}
               </span>
             </li>

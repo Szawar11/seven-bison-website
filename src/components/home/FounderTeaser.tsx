@@ -6,6 +6,7 @@ import { gsap, ScrollTrigger } from '@/lib/gsap'
 import { Section } from '@/components/ui/Section'
 import { Eyebrow } from '@/components/ui/Eyebrow'
 import { Button } from '@/components/ui/Button'
+import { MediaPlaceholder } from '@/components/ui/MediaPlaceholder'
 import { contact } from '@/lib/config'
 
 /**
@@ -69,22 +70,16 @@ export function FounderTeaser() {
           </div>
         </div>
 
-        {/* Photo placeholder — swap for <Image> when asset is ready */}
+        {/* Photo placeholder — swap for <Image src="/images/founder.jpg"> when asset is ready */}
         <div data-reveal className="md:col-span-4">
           <div className="relative aspect-[4/5] w-full overflow-hidden border border-hairline bg-canvas-muted">
-            {/* Placeholder grid lines — remove once real photo is in */}
-            <svg
-              className="absolute inset-0 h-full w-full opacity-20"
-              viewBox="0 0 4 5"
-              preserveAspectRatio="none"
-              aria-hidden="true"
-            >
-              <line x1="0" y1="2.5" x2="4" y2="2.5" stroke="#E80787" strokeWidth="0.04" />
-              <line x1="2" y1="0" x2="2" y2="5"   stroke="#E80787" strokeWidth="0.04" />
-            </svg>
-            <p className="absolute inset-0 flex items-center justify-center text-caption text-content-disabled">
-              Founder photo
-            </p>
+            <MediaPlaceholder
+              kind="portrait"
+              spec="4:5 · 1600×2000 (recommended)"
+              format="JPG / WebP · upload"
+              hint="Szymon Wojewski — portrait"
+              size="lg"
+            />
           </div>
         </div>
 

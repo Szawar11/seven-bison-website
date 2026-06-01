@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import { Section } from '@/components/ui/Section'
 import { Eyebrow } from '@/components/ui/Eyebrow'
 import { Button } from '@/components/ui/Button'
+import { MediaPlaceholder } from '@/components/ui/MediaPlaceholder'
 import { contact } from '@/lib/config'
 
 export const metadata: Metadata = {
@@ -87,22 +88,16 @@ export default function AboutPage() {
             </div>
           </div>
 
-          {/* Photo placeholder — replace <div> with <Image> when photo is ready */}
+          {/* Photo placeholder — replace whole inner with <Image src="/images/founder.jpg"> */}
           <div className="md:col-span-4">
             <div className="relative aspect-[4/5] w-full overflow-hidden border border-hairline bg-canvas-muted">
-              {/* Placeholder grid lines — remove once real photo is in */}
-              <svg
-                className="absolute inset-0 h-full w-full opacity-20"
-                viewBox="0 0 4 5"
-                preserveAspectRatio="none"
-                aria-hidden="true"
-              >
-                <line x1="0" y1="2.5" x2="4" y2="2.5" stroke="#E80787" strokeWidth="0.04" />
-                <line x1="2" y1="0" x2="2" y2="5"   stroke="#E80787" strokeWidth="0.04" />
-              </svg>
-              <p className="absolute inset-0 flex items-center justify-center text-caption text-content-disabled">
-                Founder photo
-              </p>
+              <MediaPlaceholder
+                kind="portrait"
+                spec="4:5 · 1600×2000"
+                format="JPG / WebP · upload"
+                hint="Szymon Wojewski — portrait"
+                size="lg"
+              />
             </div>
           </div>
         </div>
@@ -127,20 +122,15 @@ export default function AboutPage() {
             <ul className="mt-10 grid grid-cols-1 gap-6 sm:grid-cols-3">
               {teamPlaceholders.map((member, i) => (
                 <li key={i} className="border border-hairline bg-canvas-soft">
-                  {/* Photo placeholder */}
+                  {/* Photo placeholder — replace with <Image> */}
                   <div className="relative aspect-square overflow-hidden bg-canvas-muted">
-                    <svg
-                      className="absolute inset-0 h-full w-full opacity-15"
-                      viewBox="0 0 1 1"
-                      preserveAspectRatio="none"
-                      aria-hidden="true"
-                    >
-                      <line x1="0" y1="0.5" x2="1" y2="0.5" stroke="#E80787" strokeWidth="0.01" />
-                      <line x1="0.5" y1="0" x2="0.5" y2="1" stroke="#E80787" strokeWidth="0.01" />
-                    </svg>
-                    <p className="absolute inset-0 flex items-center justify-center text-caption text-content-disabled">
-                      Photo
-                    </p>
+                    <MediaPlaceholder
+                      kind="portrait"
+                      spec="1:1 · 1000×1000"
+                      format="JPG / WebP"
+                      hint={`Team #${i + 1}`}
+                      size="md"
+                    />
                   </div>
                   {/* Name + role */}
                   <div className="p-5">
